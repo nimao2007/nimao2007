@@ -1,0 +1,35 @@
+{
+  "name": "musicmaker-pro",
+  "version": "1.0.0",
+  "description": "A comprehensive web application for making music with virtual piano, beat maker, synthesizer, and recording capabilities",
+  "main": "index.html",
+  "scripts": {
+    "start": "python3 -m http.server 8000",
+    "dev": "python3 -m http.server 3000",
+    "serve": "npx serve .",
+    "build": "echo 'No build step needed for vanilla HTML/CSS/JS'"
+  },
+  "keywords": [
+    "music",
+    "audio",
+    "synthesizer",
+    "piano",
+    "beats",
+    "recording",
+    "web-audio",
+    "music-production"
+  ],
+  "author": "MusicMaker Pro",
+  "license": "MIT",
+  "devDependencies": {
+    "serve": "^14.2.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nimao2007/musicmaker-pro"
+  },
+  "homepage": ".",
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}
