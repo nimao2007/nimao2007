@@ -36,7 +36,22 @@ In Customizer > Social Media, add your URLs:
 - Facebook
 - Twitter
 
-### 5. Farsi Font Features
+### 5. Setting Up the Blog
+1. **Create Blog Posts**: Go to `Posts > Add New`
+   - Add title and content in Farsi/English
+   - Set **Featured Image** for visual appeal
+   - Assign **Categories** (Music News, Reviews, etc.)
+   - Add **Tags** for better search
+
+2. **Configure Sidebar**: Go to `Appearance > Widgets`
+   - Add Recent Posts, Categories, Tag Cloud widgets
+   - Customize the sidebar content
+
+3. **Blog Navigation**: 
+   - The theme automatically adds Blog to the menu
+   - Create categories for better organization
+
+### 6. Farsi Font Features
 - **Primary Font**: Vazirmatn (modern Persian font)
 - **Automatic RTL**: Detects Persian/Arabic content
 - **Number Support**: Both Western and Persian numerals
@@ -46,6 +61,8 @@ In Customizer > Social Media, add your URLs:
 ✅ RTL Support for Farsi/Arabic  
 ✅ Music Player with Audio Support  
 ✅ Custom Post Types (Music & Albums)  
+✅ Blog System with Categories & Featured Images  
+✅ Advanced Search Functionality  
 ✅ Social Media Integration  
 ✅ Mobile Responsive Design  
 ✅ Dark Mode Support  

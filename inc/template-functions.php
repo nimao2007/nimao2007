@@ -53,6 +53,48 @@ function artist_music_pro_pingback_header() {
 add_action('wp_head', 'artist_music_pro_pingback_header');
 
 /**
+ * Fallback menu for when no menu is assigned
+ */
+function artist_music_pro_fallback_menu() {
+    echo '<ul id="primary-menu" class="nav-menu fallback-menu">';
+    
+    // Home
+    echo '<li class="menu-item"><a href="' . esc_url(home_url('/')) . '">' . esc_html__('Home', 'artist-music-pro') . '</a></li>';
+    
+    // Music
+    if (post_type_exists('music')) {
+        echo '<li class="menu-item"><a href="' . esc_url(get_post_type_archive_link('music')) . '">' . esc_html__('Music', 'artist-music-pro') . '</a></li>';
+    }
+    
+    // Albums
+    if (post_type_exists('album')) {
+        echo '<li class="menu-item"><a href="' . esc_url(get_post_type_archive_link('album')) . '">' . esc_html__('Albums', 'artist-music-pro') . '</a></li>';
+    }
+    
+    // Blog
+    $blog_page_id = get_option('page_for_posts');
+    if ($blog_page_id) {
+        echo '<li class="menu-item"><a href="' . esc_url(get_permalink($blog_page_id)) . '">' . esc_html__('Blog', 'artist-music-pro') . '</a></li>';
+    } else {
+        echo '<li class="menu-item"><a href="' . esc_url(home_url('/blog/')) . '">' . esc_html__('Blog', 'artist-music-pro') . '</a></li>';
+    }
+    
+    // About
+    $about_page = get_page_by_path('about');
+    if ($about_page) {
+        echo '<li class="menu-item"><a href="' . esc_url(get_permalink($about_page)) . '">' . esc_html__('About', 'artist-music-pro') . '</a></li>';
+    }
+    
+    // Contact
+    $contact_page = get_page_by_path('contact');
+    if ($contact_page) {
+        echo '<li class="menu-item"><a href="' . esc_url(get_permalink($contact_page)) . '">' . esc_html__('Contact', 'artist-music-pro') . '</a></li>';
+    }
+    
+    echo '</ul>';
+}
+
+/**
  * Custom logo function with fallback
  */
 function artist_music_pro_custom_logo() {
