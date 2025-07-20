@@ -429,13 +429,7 @@ function artist_music_pro_save_meta_boxes($post_id) {
 }
 add_action('save_post', 'artist_music_pro_save_meta_boxes');
 
-/**
- * Custom excerpt length
- */
-function artist_music_pro_excerpt_length($length) {
-    return 20;
-}
-add_filter('excerpt_length', 'artist_music_pro_excerpt_length');
+// Excerpt length function moved to inc/template-functions.php to avoid duplication
 
 // Excerpt more function moved to inc/template-functions.php to avoid duplication
 
