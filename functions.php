@@ -437,13 +437,7 @@ function artist_music_pro_excerpt_length($length) {
 }
 add_filter('excerpt_length', 'artist_music_pro_excerpt_length');
 
-/**
- * Custom excerpt more
- */
-function artist_music_pro_excerpt_more($more) {
-    return '...';
-}
-add_filter('excerpt_more', 'artist_music_pro_excerpt_more');
+// Excerpt more function moved to inc/template-functions.php to avoid duplication
 
 // Body classes function moved to inc/template-functions.php to avoid duplication
 
