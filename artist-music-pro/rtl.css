@@ -1,0 +1,431 @@
+/*
+Theme Name: Artist Music Pro
+Description: RTL styles for Arabic and Farsi languages
+*/
+
+/* RTL Base Styles */
+body.rtl {
+    direction: rtl;
+    text-align: right;
+    font-family: 'Vazirmatn', 'Noto Sans Arabic', 'Tahoma', Arial, sans-serif;
+}
+
+/* Header RTL Adjustments */
+.rtl .header-content {
+    flex-direction: row-reverse;
+}
+
+.rtl .site-branding {
+    text-align: right;
+}
+
+.rtl .main-navigation ul {
+    flex-direction: row-reverse;
+}
+
+.rtl .main-navigation li {
+    margin: 0 var(--spacing-sm) 0 0;
+}
+
+.rtl .menu-toggle {
+    float: left;
+}
+
+.rtl .language-switcher,
+.rtl .rtl-toggle {
+    margin-left: var(--spacing-sm);
+    margin-right: 0;
+}
+
+/* Navigation RTL */
+.rtl .main-navigation ul ul {
+    right: 0;
+    left: auto;
+}
+
+.rtl .main-navigation ul ul ul {
+    right: 100%;
+    left: auto;
+}
+
+/* Content RTL */
+.rtl .hero-content {
+    text-align: center; /* Keep centered for hero */
+}
+
+.rtl .about-content {
+    grid-template-columns: 1fr 1fr;
+    direction: rtl;
+}
+
+.rtl .about-text {
+    text-align: right;
+}
+
+/* Music Grid RTL */
+.rtl .music-grid {
+    direction: rtl;
+}
+
+.rtl .music-card-content {
+    text-align: right;
+}
+
+/* Player Controls RTL */
+.rtl .player-controls {
+    flex-direction: row-reverse;
+}
+
+.rtl .track-info {
+    text-align: right;
+    margin-right: var(--spacing-md);
+    margin-left: 0;
+}
+
+/* Form RTL */
+.rtl .form-group label {
+    text-align: right;
+}
+
+.rtl .form-group input,
+.rtl .form-group textarea {
+    text-align: right;
+    direction: rtl;
+}
+
+.rtl .contact-form {
+    direction: rtl;
+}
+
+.rtl .newsletter-form {
+    direction: rtl;
+}
+
+.rtl .newsletter-form .form-group {
+    flex-direction: row-reverse;
+}
+
+/* Footer RTL */
+.rtl .footer-content {
+    direction: rtl;
+    text-align: right;
+}
+
+.rtl .footer-section {
+    text-align: right;
+}
+
+.rtl .footer-menu {
+    text-align: right;
+}
+
+.rtl .footer-menu li {
+    margin-left: var(--spacing-md);
+    margin-right: 0;
+}
+
+.rtl .social-links {
+    flex-direction: row-reverse;
+}
+
+.rtl .site-info {
+    text-align: center; /* Keep centered */
+}
+
+/* Posts RTL */
+.rtl .post-header {
+    text-align: right;
+}
+
+.rtl .post-meta {
+    direction: rtl;
+}
+
+.rtl .post-content {
+    text-align: right;
+    direction: rtl;
+}
+
+.rtl .post-content img {
+    margin: var(--spacing-md) 0 var(--spacing-md) var(--spacing-md);
+}
+
+/* Comments RTL */
+.rtl .comment {
+    text-align: right;
+    direction: rtl;
+}
+
+.rtl .comment-author {
+    float: right;
+}
+
+.rtl .comment-meta {
+    text-align: right;
+}
+
+/* Alignment Classes RTL */
+.rtl .alignleft {
+    float: right;
+    margin-left: var(--spacing-md);
+    margin-right: 0;
+}
+
+.rtl .alignright {
+    float: left;
+    margin-right: var(--spacing-md);
+    margin-left: 0;
+}
+
+/* Section Titles RTL */
+.rtl .section-title::after {
+    right: 50%;
+    left: auto;
+    transform: translateX(50%);
+}
+
+/* Button RTL */
+.rtl .btn {
+    direction: rtl;
+}
+
+/* Widget RTL */
+.rtl .widget {
+    text-align: right;
+    direction: rtl;
+}
+
+.rtl .widget-title {
+    text-align: right;
+}
+
+.rtl .widget ul {
+    text-align: right;
+}
+
+.rtl .widget ul li {
+    text-align: right;
+}
+
+/* Pagination RTL */
+.rtl .pagination-wrapper {
+    direction: rtl;
+}
+
+.rtl .page-numbers {
+    direction: rtl;
+}
+
+/* Search Form RTL */
+.rtl .search-form {
+    direction: rtl;
+}
+
+.rtl .search-field {
+    text-align: right;
+    direction: rtl;
+}
+
+/* Mobile Menu RTL */
+@media (max-width: 768px) {
+    .rtl .main-navigation ul {
+        text-align: right;
+    }
+    
+    .rtl .main-navigation li {
+        text-align: right;
+    }
+    
+    .rtl .menu-toggle {
+        float: right;
+    }
+}
+
+/* Typography Enhancements for RTL */
+.rtl h1, .rtl h2, .rtl h3, .rtl h4, .rtl h5, .rtl h6 {
+    font-family: 'Vazirmatn', 'Noto Sans Arabic', serif;
+    text-align: right;
+}
+
+.rtl p {
+    text-align: right;
+    line-height: 1.8;
+}
+
+.rtl blockquote {
+    text-align: right;
+    border-right: 4px solid var(--secondary-color);
+    border-left: none;
+    padding-right: var(--spacing-md);
+    padding-left: 0;
+    margin-right: var(--spacing-md);
+    margin-left: 0;
+}
+
+/* List RTL */
+.rtl ul, .rtl ol {
+    text-align: right;
+    padding-right: var(--spacing-lg);
+    padding-left: 0;
+}
+
+.rtl li {
+    text-align: right;
+}
+
+/* Table RTL */
+.rtl table {
+    direction: rtl;
+    text-align: right;
+}
+
+.rtl th, .rtl td {
+    text-align: right;
+}
+
+/* Form Table RTL */
+.rtl .form-table th {
+    text-align: right;
+    padding-right: 0;
+    padding-left: var(--spacing-sm);
+}
+
+.rtl .form-table td {
+    text-align: right;
+}
+
+/* Custom RTL Utilities */
+.rtl-text {
+    direction: rtl;
+    text-align: right;
+    font-family: 'Vazirmatn', 'Noto Sans Arabic', sans-serif;
+}
+
+.ltr-text {
+    direction: ltr;
+    text-align: left;
+    font-family: 'Inter', sans-serif;
+}
+
+/* Farsi Number Support */
+.rtl .farsi-numbers {
+    font-family: 'Vazirmatn', 'Noto Sans Arabic', sans-serif;
+    direction: rtl;
+}
+
+/* Music Player RTL Specific */
+.rtl .progress-bar {
+    direction: ltr; /* Keep progress bar LTR for consistency */
+}
+
+.rtl .music-card h3,
+.rtl .music-card p {
+    text-align: right;
+}
+
+/* Hero Section RTL */
+.rtl .hero-title {
+    text-align: center; /* Keep hero centered */
+    font-family: 'Vazirmatn', serif;
+}
+
+.rtl .hero-subtitle {
+    text-align: center;
+    font-family: 'Vazirmatn', sans-serif;
+}
+
+/* About Section RTL */
+.rtl .about-text h2 {
+    text-align: right;
+}
+
+.rtl .about-text p {
+    text-align: right;
+    line-height: 2;
+}
+
+/* WordPress Core RTL Fixes */
+.rtl .wp-caption {
+    text-align: right;
+}
+
+.rtl .wp-caption-text {
+    text-align: right;
+    direction: rtl;
+}
+
+.rtl .gallery {
+    direction: rtl;
+}
+
+.rtl .gallery-item {
+    text-align: right;
+}
+
+/* Admin Bar RTL (if visible) */
+.rtl #wpadminbar {
+    direction: rtl;
+}
+
+/* Skip Link RTL */
+.rtl .skip-link {
+    left: auto;
+    right: -9999px;
+}
+
+.rtl .skip-link:focus {
+    right: 6px;
+    left: auto;
+}
+
+/* Accessibility RTL */
+.rtl .screen-reader-text {
+    direction: rtl;
+}
+
+/* Custom Post Type RTL */
+.rtl .music-meta,
+.rtl .album-meta {
+    text-align: right;
+    direction: rtl;
+}
+
+/* Language Toggle Button */
+.rtl-toggle button {
+    background: transparent;
+    border: 1px solid var(--border-color);
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: 'Vazirmatn', sans-serif;
+}
+
+.rtl-toggle button:hover {
+    background: var(--secondary-color);
+    color: white;
+    border-color: var(--secondary-color);
+}
+
+/* Responsive RTL Adjustments */
+@media (max-width: 768px) {
+    .rtl .about-content {
+        grid-template-columns: 1fr;
+    }
+    
+    .rtl .footer-content {
+        text-align: center;
+    }
+    
+    .rtl .music-grid {
+        text-align: center;
+    }
+}
+
+/* Print Styles RTL */
+@media print {
+    .rtl body {
+        direction: rtl;
+        text-align: right;
+    }
+}
