@@ -23,6 +23,7 @@
     function initMobileMenu() {
         const menuToggle = $('.menu-toggle');
         const navigation = $('.main-navigation');
+        const navMenu = $('.nav-menu');
 
         menuToggle.on('click', function(e) {
             e.preventDefault();
@@ -30,27 +31,50 @@
             const isExpanded = $(this).attr('aria-expanded') === 'true';
             
             $(this).attr('aria-expanded', !isExpanded);
-            navigation.toggleClass('active');
+            navigation.toggleClass('toggled');
+            navMenu.toggleClass('toggled');
             
             // Toggle hamburger icon animation
             $(this).toggleClass('active');
+            
+            // Update menu text for RTL support
+            const menuText = $(this).find('.menu-text');
+            if (menuText.length) {
+                if (isExpanded) {
+                    menuText.text(document.documentElement.dir === 'rtl' ? 'منو' : 'Menu');
+                } else {
+                    menuText.text(document.documentElement.dir === 'rtl' ? 'بستن' : 'Close');
+                }
+            }
         });
 
         // Close mobile menu when clicking outside
         $(document).on('click', function(e) {
             if (!$(e.target).closest('.main-navigation, .menu-toggle').length) {
                 menuToggle.attr('aria-expanded', 'false');
-                navigation.removeClass('active');
+                navigation.removeClass('toggled');
+                navMenu.removeClass('toggled');
                 menuToggle.removeClass('active');
+                
+                const menuText = menuToggle.find('.menu-text');
+                if (menuText.length) {
+                    menuText.text(document.documentElement.dir === 'rtl' ? 'منو' : 'Menu');
+                }
             }
         });
 
         // Close mobile menu on window resize
         $(window).on('resize', function() {
-            if ($(window).width() > 768) {
+            if ($(window).width() > 575) {
                 menuToggle.attr('aria-expanded', 'false');
-                navigation.removeClass('active');
+                navigation.removeClass('toggled');
+                navMenu.removeClass('toggled');
                 menuToggle.removeClass('active');
+                
+                const menuText = menuToggle.find('.menu-text');
+                if (menuText.length) {
+                    menuText.text(document.documentElement.dir === 'rtl' ? 'منو' : 'Menu');
+                }
             }
         });
     }

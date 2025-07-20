@@ -58,37 +58,46 @@ add_action('wp_head', 'artist_music_pro_pingback_header');
 function artist_music_pro_fallback_menu() {
     echo '<ul id="primary-menu" class="nav-menu fallback-menu">';
     
+    // Detect if RTL/Persian
+    $is_rtl = is_rtl() || (function_exists('get_locale') && in_array(get_locale(), ['fa_IR', 'fa_AF', 'ar']));
+    
     // Home
-    echo '<li class="menu-item"><a href="' . esc_url(home_url('/')) . '">' . esc_html__('Home', 'artist-music-pro') . '</a></li>';
+    $home_text = $is_rtl ? 'خانه' : esc_html__('Home', 'artist-music-pro');
+    echo '<li class="menu-item"><a href="' . esc_url(home_url('/')) . '">' . $home_text . '</a></li>';
     
     // Music
     if (post_type_exists('music')) {
-        echo '<li class="menu-item"><a href="' . esc_url(get_post_type_archive_link('music')) . '">' . esc_html__('Music', 'artist-music-pro') . '</a></li>';
+        $music_text = $is_rtl ? 'موزیک' : esc_html__('Music', 'artist-music-pro');
+        echo '<li class="menu-item"><a href="' . esc_url(get_post_type_archive_link('music')) . '">' . $music_text . '</a></li>';
     }
     
     // Albums
     if (post_type_exists('album')) {
-        echo '<li class="menu-item"><a href="' . esc_url(get_post_type_archive_link('album')) . '">' . esc_html__('Albums', 'artist-music-pro') . '</a></li>';
+        $albums_text = $is_rtl ? 'آلبوم‌ها' : esc_html__('Albums', 'artist-music-pro');
+        echo '<li class="menu-item"><a href="' . esc_url(get_post_type_archive_link('album')) . '">' . $albums_text . '</a></li>';
     }
     
     // Blog
+    $blog_text = $is_rtl ? 'وبلاگ' : esc_html__('Blog', 'artist-music-pro');
     $blog_page_id = get_option('page_for_posts');
     if ($blog_page_id) {
-        echo '<li class="menu-item"><a href="' . esc_url(get_permalink($blog_page_id)) . '">' . esc_html__('Blog', 'artist-music-pro') . '</a></li>';
+        echo '<li class="menu-item"><a href="' . esc_url(get_permalink($blog_page_id)) . '">' . $blog_text . '</a></li>';
     } else {
-        echo '<li class="menu-item"><a href="' . esc_url(home_url('/blog/')) . '">' . esc_html__('Blog', 'artist-music-pro') . '</a></li>';
+        echo '<li class="menu-item"><a href="' . esc_url(home_url('/blog/')) . '">' . $blog_text . '</a></li>';
     }
     
     // About
+    $about_text = $is_rtl ? 'درباره من' : esc_html__('About', 'artist-music-pro');
     $about_page = get_page_by_path('about');
     if ($about_page) {
-        echo '<li class="menu-item"><a href="' . esc_url(get_permalink($about_page)) . '">' . esc_html__('About', 'artist-music-pro') . '</a></li>';
+        echo '<li class="menu-item"><a href="' . esc_url(get_permalink($about_page)) . '">' . $about_text . '</a></li>';
     }
     
     // Contact
+    $contact_text = $is_rtl ? 'تماس با من' : esc_html__('Contact', 'artist-music-pro');
     $contact_page = get_page_by_path('contact');
     if ($contact_page) {
-        echo '<li class="menu-item"><a href="' . esc_url(get_permalink($contact_page)) . '">' . esc_html__('Contact', 'artist-music-pro') . '</a></li>';
+        echo '<li class="menu-item"><a href="' . esc_url(get_permalink($contact_page)) . '">' . $contact_text . '</a></li>';
     }
     
     echo '</ul>';
