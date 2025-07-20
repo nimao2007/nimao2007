@@ -445,21 +445,7 @@ function artist_music_pro_excerpt_more($more) {
 }
 add_filter('excerpt_more', 'artist_music_pro_excerpt_more');
 
-/**
- * Body classes for RTL support
- */
-function artist_music_pro_body_classes($classes) {
-    if (is_rtl()) {
-        $classes[] = 'rtl';
-    }
-    
-    if (is_home() || is_front_page()) {
-        $classes[] = 'home-page';
-    }
-    
-    return $classes;
-}
-add_filter('body_class', 'artist_music_pro_body_classes');
+// Body classes function moved to inc/template-functions.php to avoid duplication
 
 /**
  * Admin styles for better UX
