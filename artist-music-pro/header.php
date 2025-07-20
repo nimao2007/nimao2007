@@ -58,23 +58,24 @@
 
                 <!-- Primary Navigation -->
                 <nav id="site-navigation" class="main-navigation" role="navigation" aria-label="<?php _e('Primary Menu', 'artist-music-pro'); ?>">
-                    <button class="menu-toggle" aria-controls="primary-menu" aria-expanded="false">
-                        <span class="sr-only"><?php _e('Primary Menu', 'artist-music-pro'); ?></span>
+                    <?php
+                    wp_nav_menu(array(
+                        'theme_location' => 'menu-1',
+                        'menu_id'        => 'primary-menu',
+                        'menu_class'     => 'nav-menu',
+                        'container'      => false,
+                        'fallback_cb'    => 'artist_music_pro_fallback_menu',
+                    ));
+                    ?>
+                    
+                    <button class="menu-toggle" aria-controls="primary-menu" aria-expanded="false" aria-label="<?php _e('Toggle navigation', 'artist-music-pro'); ?>">
                         <span class="menu-icon">
                             <span></span>
                             <span></span>
                             <span></span>
                         </span>
+                        <span class="menu-text"><?php _e('Menu', 'artist-music-pro'); ?></span>
                     </button>
-                    
-                    <?php
-                    wp_nav_menu(array(
-                        'theme_location' => 'primary',
-                        'menu_id'        => 'primary-menu',
-                        'container'      => false,
-                        'fallback_cb'    => 'artist_music_pro_default_menu',
-                    ));
-                    ?>
 
                     <!-- Language Switcher (if using WPML or Polylang) -->
                     <?php if (function_exists('pll_the_languages')) : ?>
