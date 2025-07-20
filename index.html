@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نیما اولادی - وب‌سایت شخصی</title>
+    <meta name="description" content="وب‌سایت شخصی نیما اولادی - برنامه‌نویس، طراح و توسعه‌دهنده">
+    <meta name="keywords" content="نیما اولادی، برنامه‌نویسی، طراحی وب، توسعه نرم‌افزار">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="styles.css">
+    
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header" id="header">
+        <nav class="nav container">
+            <a href="#home" class="nav__logo">
+                نیما اولادی
+            </a>
+
+            <div class="nav__menu" id="nav-menu">
+                <ul class="nav__list">
+                    <li class="nav__item">
+                        <a href="#home" class="nav__link active-link">خانه</a>
+                    </li>
+                    <li class="nav__item">
+                        <a href="#about" class="nav__link">درباره من</a>
+                    </li>
+                    <li class="nav__item">
+                        <a href="#skills" class="nav__link">مهارت‌ها</a>
+                    </li>
+                    <li class="nav__item">
+                        <a href="#services" class="nav__link">خدمات</a>
+                    </li>
+                    <li class="nav__item">
+                        <a href="#portfolio" class="nav__link">نمونه کارها</a>
+                    </li>
+                    <li class="nav__item">
+                        <a href="#contact" class="nav__link">تماس</a>
+                    </li>
+                </ul>
+
+                <i class="fas fa-times nav__close" id="nav-close"></i>
+            </div>
+
+            <div class="nav__toggle" id="nav-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
+        </nav>
+    </header>
+
+    <main class="main">
+        <!-- Home -->
+        <section class="home section" id="home">
+            <div class="home__container container grid">
+                <div class="home__data">
+                    <span class="home__greeting">سلام، من هستم</span>
+                    <h1 class="home__name">نیما اولادی</h1>
+                    <h3 class="home__education">برنامه‌نویس فول‌استک</h3>
+
+                    <div class="home__buttons">
+                        <a download="" href="assets/pdf/Nima-CV.pdf" class="button button--ghost">
+                            دانلود رزومه
+                        </a>
+                        <a href="#about" class="button">درباره من</a>
+                    </div>
+                </div>
+
+                <div class="home__handle">
+                    <img src="assets/img/perfil.png" alt="نیما اولادی" class="home__img">
+                </div>
+
+                <div class="home__social">
+                    <a href="https://www.linkedin.com/" target="_blank" class="home__social-link">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                    <a href="https://github.com/" target="_blank" class="home__social-link">
+                        <i class="fab fa-github"></i>
+                    </a>
+                    <a href="https://telegram.org/" target="_blank" class="home__social-link">
+                        <i class="fab fa-telegram"></i>
+                    </a>
+                </div>
+
+                <a href="#about" class="home__scroll">
+                    <i class="fas fa-mouse home__scroll-icon"></i>
+                    <span class="home__scroll-name">مرور</span>
+                </a>
+            </div>
+        </section>
+
+        <!-- About -->
+        <section class="about section" id="about">
+            <span class="section__subtitle">مقدمه</span>
+            <h2 class="section__title">درباره من</h2>
+
+            <div class="about__container container grid">
+                <img src="assets/img/about.jpg" alt="درباره نیما" class="about__img">
+
+                <div class="about__data">
+                    <div class="about__info">
+                        <div class="about__box">
+                            <i class="fas fa-award about__icon"></i>
+                            <h3 class="about__title">تجربه</h3>
+                            <span class="about__subtitle">۸+ سال کار</span>
+                        </div>
+
+                        <div class="about__box">
+                            <i class="fas fa-briefcase about__icon"></i>
+                            <h3 class="about__title">تکمیل شده</h3>
+                            <span class="about__subtitle">۴۸+ پروژه</span>
+                        </div>
+
+                        <div class="about__box">
+                            <i class="fas fa-headphones about__icon"></i>
+                            <h3 class="about__title">پشتیبانی</h3>
+                            <span class="about__subtitle">۲۴/۷ آنلاین</span>
+                        </div>
+                    </div>
+
+                    <p class="about__description">
+                        برنامه‌نویس فول‌استک با بیش از ۸ سال تجربه در زمینه توسعه وب و اپلیکیشن‌های موبایل. 
+                        علاقه‌مند به تکنولوژی‌های نوین و ایجاد راه‌حل‌های نوآورانه برای کسب‌وکارها.
+                    </p>
+
+                    <a href="#contact" class="button">تماس با من</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Skills -->
+        <section class="skills section" id="skills">
+            <span class="section__subtitle">توانایی‌ها</span>
+            <h2 class="section__title">مهارت‌های من</h2>
+
+            <div class="skills__container container grid">
+                <div class="skills__content">
+                    <h3 class="skills__title">توسعه Frontend</h3>
+
+                    <div class="skills__box">
+                        <div class="skills__group">
+                            <div class="skills__data">
+                                <i class="fab fa-html5"></i>
+                                <div>
+                                    <h3 class="skills__name">HTML</h3>
+                                    <span class="skills__level">پیشرفته</span>
+                                </div>
+                            </div>
+
+                            <div class="skills__data">
+                                <i class="fab fa-css3-alt"></i>
+                                <div>
+                                    <h3 class="skills__name">CSS</h3>
+                                    <span class="skills__level">پیشرفته</span>
+                                </div>
+                            </div>
+
+                            <div class="skills__data">
+                                <i class="fab fa-js-square"></i>
+                                <div>
+                                    <h3 class="skills__name">JavaScript</h3>
+                                    <span class="skills__level">پیشرفته</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="skills__group">
+                            <div class="skills__data">
+                                <i class="fab fa-react"></i>
+                                <div>
+                                    <h3 class="skills__name">React</h3>
+                                    <span class="skills__level">متوسط</span>
+                                </div>
+                            </div>
+
+                            <div class="skills__data">
+                                <i class="fab fa-vuejs"></i>
+                                <div>
+                                    <h3 class="skills__name">Vue</h3>
+                                    <span class="skills__level">متوسط</span>
+                                </div>
+                            </div>
+
+                            <div class="skills__data">
+                                <i class="fab fa-bootstrap"></i>
+                                <div>
+                                    <h3 class="skills__name">Bootstrap</h3>
+                                    <span class="skills__level">پیشرفته</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="skills__content">
+                    <h3 class="skills__title">توسعه Backend</h3>
+
+                    <div class="skills__box">
+                        <div class="skills__group">
+                            <div class="skills__data">
+                                <i class="fab fa-php"></i>
+                                <div>
+                                    <h3 class="skills__name">PHP</h3>
+                                    <span class="skills__level">پیشرفته</span>
+                                </div>
+                            </div>
+
+                            <div class="skills__data">
+                                <i class="fab fa-node-js"></i>
+                                <div>
+                                    <h3 class="skills__name">Node Js</h3>
+                                    <span class="skills__level">متوسط</span>
+                                </div>
+                            </div>
+
+                            <div class="skills__data">
+                                <i class="fab fa-python"></i>
+                                <div>
+                                    <h3 class="skills__name">Python</h3>
+                                    <span class="skills__level">متوسط</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="skills__group">
+                            <div class="skills__data">
+                                <i class="fas fa-database"></i>
+                                <div>
+                                    <h3 class="skills__name">MySQL</h3>
+                                    <span class="skills__level">پیشرفته</span>
+                                </div>
+                            </div>
+
+                            <div class="skills__data">
+                                <i class="fab fa-firebase"></i>
+                                <div>
+                                    <h3 class="skills__name">Firebase</h3>
+                                    <span class="skills__level">متوسط</span>
+                                </div>
+                            </div>
+
+                            <div class="skills__data">
+                                <i class="fab fa-git-alt"></i>
+                                <div>
+                                    <h3 class="skills__name">Git</h3>
+                                    <span class="skills__level">پیشرفته</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Services -->
+        <section class="services section" id="services">
+            <span class="section__subtitle">خدمات من</span>
+            <h2 class="section__title">ارائه می‌دهم</h2>
+
+            <div class="services__container container grid">
+                <div class="services__card">
+                    <h3 class="services__title">طراحی UI/UX</h3>
+
+                    <span class="services__button">
+                        مشاهده بیشتر <i class="fas fa-arrow-left services__icon"></i>
+                    </span>
+
+                    <div class="services__modal">
+                        <div class="services__modal-content">
+                            <i class="fas fa-times services__modal-close"></i>
+
+                            <h3 class="services__modal-title">طراحی UI/UX</h3>
+                            <p class="services__modal-description">
+                                خدمات با کیفیت و بیش از ۸ سال تجربه در کار.
+                            </p>
+
+                            <ul class="services__modal-list">
+                                <li class="services__modal-item">
+                                    <i class="fas fa-check services__modal-icon"></i>
+                                    <p class="services__modal-info">طراحی رابط کاربری مدرن</p>
+                                </li>
+                                <li class="services__modal-item">
+                                    <i class="fas fa-check services__modal-icon"></i>
+                                    <p class="services__modal-info">بهینه‌سازی تجربه کاربری</p>
+                                </li>
+                                <li class="services__modal-item">
+                                    <i class="fas fa-check services__modal-icon"></i>
+                                    <p class="services__modal-info">طراحی ریسپانسیو</p>
+                                </li>
+                                <li class="services__modal-item">
+                                    <i class="fas fa-check services__modal-icon"></i>
+                                    <p class="services__modal-info">پروتوتایپ سازی</p>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="services__card">
+                    <h3 class="services__title">توسعه Frontend</h3>
+
+                    <span class="services__button">
+                        مشاهده بیشتر <i class="fas fa-arrow-left services__icon"></i>
+                    </span>
+
+                    <div class="services__modal">
+                        <div class="services__modal-content">
+                            <i class="fas fa-times services__modal-close"></i>
+
+                            <h3 class="services__modal-title">توسعه Frontend</h3>
+                            <p class="services__modal-description">
+                                خدمات با کیفیت و بیش از ۸ سال تجربه در کار.
+                            </p>
+
+                            <ul class="services__modal-list">
+                                <li class="services__modal-item">
+                                    <i class="fas fa-check services__modal-icon"></i>
+                                    <p class="services__modal-info">توسعه وب‌سایت‌های مدرن</p>
+                                </li>
+                                <li class="services__modal-item">
+                                    <i class="fas fa-check services__modal-icon"></i>
+                                    <p class="services__modal-info">استفاده از React و Vue</p>
+                                </li>
+                                <li class="services__modal-item">
+                                    <i class="fas fa-check services__modal-icon"></i>
+                                    <p class="services__modal-info">بهینه‌سازی عملکرد</p>
+                                </li>
+                                <li class="services__modal-item">
+                                    <i class="fas fa-check services__modal-icon"></i>
+                                    <p class="services__modal-info">Cross-browser compatibility</p>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="services__card">
+                    <h3 class="services__title">توسعه Backend</h3>
+
+                    <span class="services__button">
+                        مشاهده بیشتر <i class="fas fa-arrow-left services__icon"></i>
+                    </span>
+
+                    <div class="services__modal">
+                        <div class="services__modal-content">
+                            <i class="fas fa-times services__modal-close"></i>
+
+                            <h3 class="services__modal-title">توسعه Backend</h3>
+                            <p class="services__modal-description">
+                                خدمات با کیفیت و بیش از ۸ سال تجربه در کار.
+                            </p>
+
+                            <ul class="services__modal-list">
+                                <li class="services__modal-item">
+                                    <i class="fas fa-check services__modal-icon"></i>
+                                    <p class="services__modal-info">طراحی API‌های RESTful</p>
+                                </li>
+                                <li class="services__modal-item">
+                                    <i class="fas fa-check services__modal-icon"></i>
+                                    <p class="services__modal-info">مدیریت پایگاه داده</p>
+                                </li>
+                                <li class="services__modal-item">
+                                    <i class="fas fa-check services__modal-icon"></i>
+                                    <p class="services__modal-info">امنیت و احراز هویت</p>
+                                </li>
+                                <li class="services__modal-item">
+                                    <i class="fas fa-check services__modal-icon"></i>
+                                    <p class="services__modal-info">Server deployment</p>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Portfolio -->
+        <section class="portfolio section" id="portfolio">
+            <span class="section__subtitle">کارهای اخیر</span>
+            <h2 class="section__title">نمونه کارها</h2>
+
+            <div class="portfolio__container container swiper">
+                <div class="swiper-wrapper">
+                    <div class="portfolio__content grid swiper-slide">
+                        <img src="assets/img/portfolio1.jpg" alt="پروژه ۱" class="portfolio__img">
+
+                        <div class="portfolio__data">
+                            <h3 class="portfolio__title">وب‌سایت مدرن</h3>
+                            <p class="portfolio__description">
+                                وب‌سایت ریسپانسیو با طراحی مدرن و تجربه کاربری بهینه
+                            </p>
+                            <a href="#" class="button button--flex button--small portfolio__button">
+                                نمایش
+                                <i class="fas fa-arrow-left button__icon"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="portfolio__content grid swiper-slide">
+                        <img src="assets/img/portfolio2.jpg" alt="پروژه ۲" class="portfolio__img">
+
+                        <div class="portfolio__data">
+                            <h3 class="portfolio__title">اپلیکیشن موبایل</h3>
+                            <p class="portfolio__description">
+                                اپلیکیشن موبایل کراس پلتفرم با React Native
+                            </p>
+                            <a href="#" class="button button--flex button--small portfolio__button">
+                                نمایش
+                                <i class="fas fa-arrow-left button__icon"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="portfolio__content grid swiper-slide">
+                        <img src="assets/img/portfolio3.jpg" alt="پروژه ۳" class="portfolio__img">
+
+                        <div class="portfolio__data">
+                            <h3 class="portfolio__title">فروشگاه آنلاین</h3>
+                            <p class="portfolio__description">
+                                سیستم فروشگاه آنلاین کامل با پنل مدیریت
+                            </p>
+                            <a href="#" class="button button--flex button--small portfolio__button">
+                                نمایش
+                                <i class="fas fa-arrow-left button__icon"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="swiper-button-next">
+                    <i class="fas fa-angle-left swiper-portfolio-icon"></i>
+                </div>
+                <div class="swiper-button-prev">
+                    <i class="fas fa-angle-right swiper-portfolio-icon"></i>
+                </div>
+
+                <div class="swiper-pagination"></div>
+            </div>
+        </section>
+
+        <!-- Contact -->
+        <section class="contact section" id="contact">
+            <span class="section__subtitle">ارتباط</span>
+            <h2 class="section__title">تماس با من</h2>
+
+            <div class="contact__container container grid">
+                <div class="contact__content">
+                    <h3 class="contact__title">با من صحبت کنید</h3>
+
+                    <div class="contact__info">
+                        <div class="contact__card">
+                            <i class="fas fa-envelope contact__card-icon"></i>
+                            <h3 class="contact__card-title">ایمیل</h3>
+                            <span class="contact__card-data">nima@nimaoladi.ir</span>
+
+                            <a href="mailto:nima@nimaoladi.ir" class="contact__button">
+                                بنویسید
+                                <i class="fas fa-arrow-left contact__button-icon"></i>
+                            </a>
+                        </div>
+
+                        <div class="contact__card">
+                            <i class="fab fa-whatsapp contact__card-icon"></i>
+                            <h3 class="contact__card-title">واتساپ</h3>
+                            <span class="contact__card-data">+98-912-345-6789</span>
+
+                            <a href="https://api.whatsapp.com/send?phone=989123456789&text=سلام نیما" class="contact__button">
+                                بنویسید
+                                <i class="fas fa-arrow-left contact__button-icon"></i>
+                            </a>
+                        </div>
+
+                        <div class="contact__card">
+                            <i class="fab fa-telegram contact__card-icon"></i>
+                            <h3 class="contact__card-title">تلگرام</h3>
+                            <span class="contact__card-data">@nimaoladi</span>
+
+                            <a href="https://telegram.me/nimaoladi" class="contact__button">
+                                بنویسید
+                                <i class="fas fa-arrow-left contact__button-icon"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="contact__content">
+                    <h3 class="contact__title">پروژه خود را بنویسید</h3>
+
+                    <form action="" class="contact__form">
+                        <div class="contact__form-div">
+                            <label class="contact__form-tag">نام</label>
+                            <input type="text" name="name" placeholder="نام خود را وارد کنید" class="contact__form-input">
+                        </div>
+
+                        <div class="contact__form-div">
+                            <label class="contact__form-tag">ایمیل</label>
+                            <input type="email" name="email" placeholder="ایمیل خود را وارد کنید" class="contact__form-input">
+                        </div>
+
+                        <div class="contact__form-div contact__form-area">
+                            <label class="contact__form-tag">پروژه</label>
+                            <textarea name="project" cols="30" rows="10" placeholder="پروژه خود را بنویسید" class="contact__form-input"></textarea>
+                        </div>
+
+                        <button type="submit" class="button">ارسال پیام</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer__container container">
+            <h1 class="footer__title">نیما اولادی</h1>
+
+            <ul class="footer__list">
+                <li>
+                    <a href="#about" class="footer__link">درباره</a>
+                </li>
+                <li>
+                    <a href="#portfolio" class="footer__link">پروژه‌ها</a>
+                </li>
+                <li>
+                    <a href="#testimonial" class="footer__link">نظرات</a>
+                </li>
+            </ul>
+
+            <ul class="footer__social">
+                <a href="https://telegram.me/nimaoladi" class="footer__social-link" target="_blank">
+                    <i class="fab fa-telegram"></i>
+                </a>
+                <a href="https://linkedin.com/" class="footer__social-link" target="_blank">
+                    <i class="fab fa-linkedin-in"></i>
+                </a>
+                <a href="https://github.com/" class="footer__social-link" target="_blank">
+                    <i class="fab fa-github"></i>
+                </a>
+            </ul>
+
+            <span class="footer__copy">
+                &#169; تمامی حقوق محفوظ است - نیما اولادی
+            </span>
+        </div>
+    </footer>
+
+    <!-- Scroll Up -->
+    <a href="#" class="scrollup" id="scroll-up">
+        <i class="fas fa-arrow-up scrollup__icon"></i>
+    </a>
+
+    <!-- Swiper JS -->
+    <script src="https://unpkg.com/swiper@8/swiper-bundle.min.js"></script>
+
+    <!-- Main JS -->
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,14 @@
+This is a placeholder for Nima Oladi's CV.
+
+In a real implementation, this would be a PDF file containing:
+- Personal information
+- Professional experience
+- Skills and expertise
+- Education background
+- Projects and achievements
+- Contact information
+
+To add a real CV:
+1. Create your CV as a PDF file
+2. Replace this file with your PDF
+3. Ensure the filename matches the link in index.html
