@@ -187,6 +187,206 @@
             line-height: 1.4;
         }
         
+        .guitar-neck {
+            background: #8B4513;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 15px 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .guitar-neck::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, #654321 0%, #8B4513 50%, #654321 100%);
+            opacity: 0.7;
+        }
+        
+        .fretboard {
+            position: relative;
+            z-index: 2;
+            background: #2F1B14;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 10px 0;
+        }
+        
+        .fret-line {
+            height: 2px;
+            background: #C0C0C0;
+            margin: 0 5px;
+            position: absolute;
+            top: 15px;
+            bottom: 15px;
+            width: 2px;
+        }
+        
+        .string-line {
+            height: 1px;
+            background: #E5E5E5;
+            margin: 8px 0;
+            position: relative;
+            border-radius: 1px;
+        }
+        
+        .fret-marker {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            position: absolute;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            font-weight: bold;
+            color: white;
+        }
+        
+        .fret-marker.root {
+            background: #e74c3c;
+        }
+        
+        .fret-marker.third {
+            background: #3498db;
+        }
+        
+        .fret-marker.fifth {
+            background: #2ecc71;
+        }
+        
+        .fret-marker.seventh {
+            background: #9b59b6;
+        }
+        
+        .fret-marker.tension {
+            background: #f39c12;
+            animation: pulse 2s infinite;
+        }
+        
+        .fret-marker:hover {
+            transform: scale(1.2);
+            box-shadow: 0 0 10px rgba(255,255,255,0.8);
+        }
+        
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(243, 156, 18, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(243, 156, 18, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(243, 156, 18, 0); }
+        }
+        
+        .string-labels {
+            display: flex;
+            flex-direction: column;
+            margin-left: 10px;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        
+        .string-label {
+            height: 25px;
+            display: flex;
+            align-items: center;
+            font-size: 12px;
+        }
+        
+        .fret-numbers {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 10px;
+            font-size: 12px;
+            color: #7f8c8d;
+            font-weight: bold;
+        }
+        
+        .voicing-selector {
+            background: #ecf0f1;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+        
+        .voicing-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .voicing-tab {
+            background: #95a5a6;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.9em;
+            transition: all 0.3s ease;
+            border: none;
+        }
+        
+        .voicing-tab.active {
+            background: #3498db;
+            transform: translateY(-2px);
+        }
+        
+        .voicing-tab:hover {
+            background: #34495e;
+        }
+        
+        .tension-tag.clickable {
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .tension-tag.clickable:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        
+        .tension-tag.active {
+            background: linear-gradient(45deg, #e74c3c, #c0392b);
+            animation: pulse 1s infinite;
+        }
+        
+        .voicing-info {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #3498db;
+            margin-top: 10px;
+        }
+        
+        .difficulty-indicator {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 0.8em;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        
+        .difficulty-easy {
+            background: #2ecc71;
+            color: white;
+        }
+        
+        .difficulty-medium {
+            background: #f39c12;
+            color: white;
+        }
+        
+        .difficulty-hard {
+            background: #e74c3c;
+            color: white;
+        }
+        
         .fret-number {
             color: #e74c3c;
             font-weight: bold;
@@ -270,9 +470,9 @@
                     <div class="tensions-section">
                         <div class="section-title">تنش‌های مجاز</div>
                         <div class="tension-tags">
-                            <span class="tension-tag">9</span>
-                            <span class="tension-tag">11</span>
-                            <span class="tension-tag">13</span>
+                            <span class="tension-tag clickable" onclick="addTension('m7', '9')">9</span>
+                            <span class="tension-tag clickable" onclick="addTension('m7', '11')">11</span>
+                            <span class="tension-tag clickable" onclick="addTension('m7', '13')">13</span>
                         </div>
                         <div class="note-info">
                             <strong>ساختار پایه:</strong> ۱ - ♭۳ - ۵ - ♭۷<br>
@@ -281,18 +481,42 @@
                     </div>
                     <div class="fingering-section">
                         <div class="section-title">نحوه اجرا</div>
-                        <div class="fingering-diagram">
-                            مثال در کلید Am7:<br>
-                            E |--5--| (13th)<br>
-                            B |--5--| (9th)<br>
-                            G |--5--| (7th)<br>
-                            D |--5--| (3rd)<br>
-                            A |--0--| (Root)<br>
-                            E |--x--|<br>
-                            <span class="fret-number">فرت 5</span>
-                        </div>
-                        <div class="note-info">
-                            <strong>نکته:</strong> می‌توانید تنش ۹ و ۱۱ را همزمان اضافه کنید بدون ایجاد ناهماهنگی.
+                        <div class="voicing-selector">
+                            <div class="voicing-tabs">
+                                <button class="voicing-tab active" onclick="showVoicing('m7', 'basic')">پایه</button>
+                                <button class="voicing-tab" onclick="showVoicing('m7', 'with9')">با تنش ۹</button>
+                                <button class="voicing-tab" onclick="showVoicing('m7', 'with11')">با تنش ۱۱</button>
+                                <button class="voicing-tab" onclick="showVoicing('m7', 'full')">کامل</button>
+                            </div>
+                            <div id="m7-guitar-neck" class="guitar-neck">
+                                <div class="fretboard">
+                                    <div style="display: flex;">
+                                        <div class="string-labels">
+                                            <div class="string-label">E</div>
+                                            <div class="string-label">B</div>
+                                            <div class="string-label">G</div>
+                                            <div class="string-label">D</div>
+                                            <div class="string-label">A</div>
+                                            <div class="string-label">E</div>
+                                        </div>
+                                        <div style="flex: 1; position: relative;">
+                                            <div class="string-line" id="m7-string-1"></div>
+                                            <div class="string-line" id="m7-string-2"></div>
+                                            <div class="string-line" id="m7-string-3"></div>
+                                            <div class="string-line" id="m7-string-4"></div>
+                                            <div class="string-line" id="m7-string-5"></div>
+                                            <div class="string-line" id="m7-string-6"></div>
+                                        </div>
+                                    </div>
+                                    <div class="fret-numbers">
+                                        <span>۰</span><span>۱</span><span>۲</span><span>۳</span><span>۴</span><span>۵</span><span>۶</span><span>۷</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="m7-voicing-info" class="voicing-info">
+                                <span class="difficulty-indicator difficulty-easy">آسان</span>
+                                <strong>Am7 پایه:</strong> ساده‌ترین شکل برای شروع
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -305,9 +529,9 @@
                     <div class="tensions-section">
                         <div class="section-title">تنش‌های مجاز</div>
                         <div class="tension-tags">
-                            <span class="tension-tag">9</span>
-                            <span class="tension-tag">#11</span>
-                            <span class="tension-tag">13</span>
+                            <span class="tension-tag clickable" onclick="addTension('maj7', '9')">9</span>
+                            <span class="tension-tag clickable" onclick="addTension('maj7', '#11')">#11</span>
+                            <span class="tension-tag clickable" onclick="addTension('maj7', '13')">13</span>
                         </div>
                         <div class="note-info">
                             <strong>ساختار پایه:</strong> ۱ - ۳ - ۵ - ۷<br>
@@ -316,18 +540,42 @@
                     </div>
                     <div class="fingering-section">
                         <div class="section-title">نحوه اجرا</div>
-                        <div class="fingering-diagram">
-                            مثال در کلید Cmaj7:<br>
-                            E |--0--| (7th)<br>
-                            B |--1--| (3rd)<br>
-                            G |--0--| (5th)<br>
-                            D |--2--| (Root)<br>
-                            A |--3--| (5th)<br>
-                            E |--x--|<br>
-                            <span class="fret-number">فرت های مختلف</span>
-                        </div>
-                        <div class="note-info">
-                            <strong>نکته:</strong> از تنش ۱۱ طبیعی اجتناب کنید، #۱۱ را ترجیح دهید.
+                        <div class="voicing-selector">
+                            <div class="voicing-tabs">
+                                <button class="voicing-tab active" onclick="showVoicing('maj7', 'basic')">پایه</button>
+                                <button class="voicing-tab" onclick="showVoicing('maj7', 'with9')">با تنش ۹</button>
+                                <button class="voicing-tab" onclick="showVoicing('maj7', 'with#11')">با #۱۱</button>
+                                <button class="voicing-tab" onclick="showVoicing('maj7', 'full')">کامل</button>
+                            </div>
+                            <div id="maj7-guitar-neck" class="guitar-neck">
+                                <div class="fretboard">
+                                    <div style="display: flex;">
+                                        <div class="string-labels">
+                                            <div class="string-label">E</div>
+                                            <div class="string-label">B</div>
+                                            <div class="string-label">G</div>
+                                            <div class="string-label">D</div>
+                                            <div class="string-label">A</div>
+                                            <div class="string-label">E</div>
+                                        </div>
+                                        <div style="flex: 1; position: relative;">
+                                            <div class="string-line" id="maj7-string-1"></div>
+                                            <div class="string-line" id="maj7-string-2"></div>
+                                            <div class="string-line" id="maj7-string-3"></div>
+                                            <div class="string-line" id="maj7-string-4"></div>
+                                            <div class="string-line" id="maj7-string-5"></div>
+                                            <div class="string-line" id="maj7-string-6"></div>
+                                        </div>
+                                    </div>
+                                    <div class="fret-numbers">
+                                        <span>۰</span><span>۱</span><span>۲</span><span>۳</span><span>۴</span><span>۵</span><span>۶</span><span>۷</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="maj7-voicing-info" class="voicing-info">
+                                <span class="difficulty-indicator difficulty-easy">آسان</span>
+                                <strong>Cmaj7 پایه:</strong> شکل کلاسیک و پرکاربرد
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -340,11 +588,11 @@
                     <div class="tensions-section">
                         <div class="section-title">تنش‌های مجاز</div>
                         <div class="tension-tags">
-                            <span class="tension-tag">9 یا b9</span>
-                            <span class="tension-tag">#9</span>
-                            <span class="tension-tag">#11</span>
-                            <span class="tension-tag">13 یا b13</span>
-                            <span class="tension-tag">5 یا b13/#5</span>
+                            <span class="tension-tag clickable" onclick="addTension('7', '9')">9</span>
+                            <span class="tension-tag clickable" onclick="addTension('7', 'b9')">b9</span>
+                            <span class="tension-tag clickable" onclick="addTension('7', '#11')">#11</span>
+                            <span class="tension-tag clickable" onclick="addTension('7', '13')">13</span>
+                            <span class="tension-tag clickable" onclick="addTension('7', 'b13')">b13</span>
                         </div>
                         <div class="note-info">
                             <strong>ساختار پایه:</strong> ۱ - ۳ - ۵ - ♭۷<br>
@@ -353,18 +601,42 @@
                     </div>
                     <div class="fingering-section">
                         <div class="section-title">نحوه اجرا</div>
-                        <div class="fingering-diagram">
-                            مثال G7 با تنش‌ها:<br>
-                            E |--3--| (13th)<br>
-                            B |--0--| (9th)<br>
-                            G |--0--| (7th)<br>
-                            D |--0--| (3rd)<br>
-                            A |--2--| (Root)<br>
-                            E |--3--| (Root)<br>
-                            <span class="fret-number">فرت 3</span>
-                        </div>
-                        <div class="note-info">
-                            <strong>نکته:</strong> آکورد 7 انعطاف‌پذیرترین آکورد برای افزودن تنش‌هاست.
+                        <div class="voicing-selector">
+                            <div class="voicing-tabs">
+                                <button class="voicing-tab active" onclick="showVoicing('7', 'basic')">پایه</button>
+                                <button class="voicing-tab" onclick="showVoicing('7', 'with9')">با تنش ۹</button>
+                                <button class="voicing-tab" onclick="showVoicing('7', 'alt')">آلترد</button>
+                                <button class="voicing-tab" onclick="showVoicing('7', 'full')">کامل</button>
+                            </div>
+                            <div id="7-guitar-neck" class="guitar-neck">
+                                <div class="fretboard">
+                                    <div style="display: flex;">
+                                        <div class="string-labels">
+                                            <div class="string-label">E</div>
+                                            <div class="string-label">B</div>
+                                            <div class="string-label">G</div>
+                                            <div class="string-label">D</div>
+                                            <div class="string-label">A</div>
+                                            <div class="string-label">E</div>
+                                        </div>
+                                        <div style="flex: 1; position: relative;">
+                                            <div class="string-line" id="7-string-1"></div>
+                                            <div class="string-line" id="7-string-2"></div>
+                                            <div class="string-line" id="7-string-3"></div>
+                                            <div class="string-line" id="7-string-4"></div>
+                                            <div class="string-line" id="7-string-5"></div>
+                                            <div class="string-line" id="7-string-6"></div>
+                                        </div>
+                                    </div>
+                                    <div class="fret-numbers">
+                                        <span>۰</span><span>۱</span><span>۲</span><span>۳</span><span>۴</span><span>۵</span><span>۶</span><span>۷</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="7-voicing-info" class="voicing-info">
+                                <span class="difficulty-indicator difficulty-easy">آسان</span>
+                                <strong>G7 پایه:</strong> کلاسیک‌ترین شکل آکورد ۷
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -616,19 +888,103 @@
             </div>
             
             <div class="tips">
-                <h3>نکات مهم برای گیتاریست‌ها:</h3>
+                <h3>راهنمای استفاده از برنامه:</h3>
                 <ul>
-                    <li><strong>تمرین تدریجی:</strong> ابتدا آکورد پایه را کامل یاد بگیرید، سپس تنش‌ها را اضافه کنید</li>
-                    <li><strong>گوش دادن:</strong> همیشه به صدای هر تنش گوش دهید و تأثیر آن را بر کیفیت آکورد درک کنید</li>
-                    <li><strong>جایگزینی:</strong> برخی تنش‌ها را می‌توان با یکدیگر جایگزین کرد</li>
-                    <li><strong>بافت موسیقی:</strong> انتخاب تنش‌ها بستگی به سبک و زمینه موسیقی دارد</li>
-                    <li><strong>صدای واضح:</strong> مطمئن شوید که تمام نت‌ها واضح و بدون مزاحمت شنیده می‌شوند</li>
+                    <li><strong>انتخاب آکورد:</strong> ابتدا آکورد مورد نظر را از بالا انتخاب کنید</li>
+                    <li><strong>کلیک روی تنش‌ها:</strong> روی هر تنش کلیک کنید تا آکورد با آن تنش نمایش داده شود</li>
+                    <li><strong>تب‌های مختلف:</strong> از تب‌های بالای دیاگرام برای دیدن راه‌حل‌های مختلف استفاده کنید</li>
+                    <li><strong>رنگ‌بندی:</strong> 🔴 ریشه - 🔵 ترس - 🟢 کوینت - 🟣 سپتم - 🟠 تنش</li>
+                    <li><strong>سطح سختی:</strong> آسان (سبز) - متوسط (نارنجی) - سخت (قرمز)</li>
+                    <li><strong>تمرین تدریجی:</strong> از آکورد پایه شروع کنید و تدریجاً تنش‌ها را اضافه کنید</li>
+                    <li><strong>گوش دادن:</strong> همیشه به تفاوت صدای هر تنش گوش دهید</li>
                 </ul>
             </div>
         </div>
     </div>
     
     <script>
+        // Guitar chord voicings data
+        const chordVoicings = {
+            'm7': {
+                'basic': {
+                    name: 'Am7 پایه',
+                    difficulty: 'easy',
+                    description: 'ساده‌ترین شکل برای شروع',
+                    frets: [[null, 0, 2, 0, 1, 0], ['root', null, 'third', null, 'seventh', null]]
+                },
+                'with9': {
+                    name: 'Am7 با تنش ۹',
+                    difficulty: 'medium',
+                    description: 'افزودن تنش ۹ برای صدای غنی‌تر',
+                    frets: [[null, 0, 2, 2, 1, 3], ['root', null, 'third', 'tension', 'seventh', 'tension']]
+                },
+                'with11': {
+                    name: 'Am7 با تنش ۱۱',
+                    difficulty: 'medium',
+                    description: 'تنش ۱۱ برای صدای جازی',
+                    frets: [[null, 0, 2, 0, 1, 3], ['root', null, 'third', null, 'seventh', 'tension']]
+                },
+                'full': {
+                    name: 'Am7 کامل',
+                    difficulty: 'hard',
+                    description: 'همه تنش‌ها در یک آکورد',
+                    frets: [[5, 5, 5, 5, 0, null], ['tension', 'tension', 'seventh', 'third', 'root', null]]
+                }
+            },
+            'maj7': {
+                'basic': {
+                    name: 'Cmaj7 پایه',
+                    difficulty: 'easy',
+                    description: 'شکل کلاسیک و پرکاربرد',
+                    frets: [[0, 1, 0, 2, 3, null], ['seventh', 'third', 'fifth', 'root', 'fifth', null]]
+                },
+                'with9': {
+                    name: 'Cmaj7 با تنش ۹',
+                    difficulty: 'medium',
+                    description: 'افزودن تنش ۹ برای حالت دریمی',
+                    frets: [[0, 3, 0, 2, 3, null], ['seventh', 'tension', 'fifth', 'root', 'fifth', null]]
+                },
+                'with#11': {
+                    name: 'Cmaj7 با #۱۱',
+                    difficulty: 'hard',
+                    description: 'تنش #۱۱ برای صدای لیدین',
+                    frets: [[0, 1, 2, 2, 3, null], ['seventh', 'third', 'tension', 'root', 'fifth', null]]
+                },
+                                 'full': {
+                     name: 'Cmaj7 کامل',
+                     difficulty: 'hard',
+                     description: 'آکورد کامل با چندین تنش',
+                     frets: [[7, 8, 9, 9, 8, null], ['seventh', 'tension', 'tension', 'root', 'third', null]]
+                 }
+             },
+             '7': {
+                 'basic': {
+                     name: 'G7 پایه',
+                     difficulty: 'easy',
+                     description: 'کلاسیک‌ترین شکل آکورد ۷',
+                     frets: [[3, 0, 0, 0, 2, 3], ['root', 'seventh', 'third', 'fifth', 'root', 'root']]
+                 },
+                 'with9': {
+                     name: 'G7 با تنش ۹',
+                     difficulty: 'medium',
+                     description: 'افزودن تنش ۹ برای صدای سوئینگ',
+                     frets: [[3, 2, 0, 0, 2, 3], ['root', 'tension', 'third', 'fifth', 'root', 'root']]
+                 },
+                 'alt': {
+                     name: 'G7 آلترد',
+                     difficulty: 'hard',
+                     description: 'آکورد آلترد با b9 و #11',
+                     frets: [[3, 1, 0, 3, 2, null], ['root', 'tension', 'third', 'tension', 'root', null]]
+                 },
+                 'full': {
+                     name: 'G7 کامل',
+                     difficulty: 'hard',
+                     description: 'همه تنش‌های ممکن',
+                     frets: [[3, 5, 4, 5, 5, null], ['root', 'tension', 'tension', 'tension', 'seventh', null]]
+                 }
+             }
+        };
+
         function showChord(chordType) {
             // Hide all chord info divs
             const chordInfos = document.querySelectorAll('.chord-info');
@@ -646,6 +1002,10 @@
             const selectedChord = document.getElementById(chordType);
             if (selectedChord) {
                 selectedChord.classList.add('active');
+                // Initialize guitar neck for this chord
+                if (chordVoicings[chordType]) {
+                    showVoicing(chordType, 'basic');
+                }
             }
             
             // Add active class to clicked button
@@ -656,6 +1016,119 @@
                 behavior: 'smooth', 
                 block: 'start' 
             });
+        }
+
+        function showVoicing(chordType, voicingType) {
+            const voicing = chordVoicings[chordType]?.[voicingType];
+            if (!voicing) return;
+
+            // Update voicing tabs
+            const tabs = document.querySelectorAll(`#${chordType} .voicing-tab`);
+            tabs.forEach(tab => tab.classList.remove('active'));
+            event?.target?.classList.add('active') || 
+            document.querySelector(`#${chordType} .voicing-tab`).classList.add('active');
+
+            // Clear previous markers
+            for (let i = 1; i <= 6; i++) {
+                const string = document.getElementById(`${chordType}-string-${i}`);
+                if (string) {
+                    string.innerHTML = '';
+                }
+            }
+
+            // Add new markers
+            voicing.frets[0].forEach((fret, stringIndex) => {
+                if (fret !== null) {
+                    const string = document.getElementById(`${chordType}-string-${stringIndex + 1}`);
+                    if (string) {
+                        const marker = document.createElement('div');
+                        marker.className = `fret-marker ${voicing.frets[1][stringIndex] || 'root'}`;
+                        marker.style.left = `${fret * 12.5}%`;
+                        marker.style.top = '50%';
+                        marker.style.transform = 'translateY(-50%)';
+                        marker.textContent = fret === 0 ? '○' : fret;
+                        marker.title = getNoteName(voicing.frets[1][stringIndex]);
+                        string.appendChild(marker);
+                    }
+                }
+            });
+
+            // Update info
+            const info = document.getElementById(`${chordType}-voicing-info`);
+            if (info) {
+                info.innerHTML = `
+                    <span class="difficulty-indicator difficulty-${voicing.difficulty}">${getDifficultyText(voicing.difficulty)}</span>
+                    <strong>${voicing.name}:</strong> ${voicing.description}
+                `;
+            }
+        }
+
+                 function addTension(chordType, tension) {
+             // Toggle tension tag active state
+             event.target.classList.toggle('active');
+             
+             // Find appropriate voicing based on selected tensions
+             const activeTensions = document.querySelectorAll(`#${chordType} .tension-tag.active`);
+             let voicingType = 'basic';
+             
+             if (activeTensions.length > 0) {
+                 const tensionTypes = Array.from(activeTensions).map(t => t.textContent);
+                 
+                 if (chordType === '7') {
+                     if (tensionTypes.includes('9') && tensionTypes.length === 1) {
+                         voicingType = 'with9';
+                     } else if (tensionTypes.includes('b9') || tensionTypes.includes('#11')) {
+                         voicingType = 'alt';
+                     } else if (tensionTypes.length > 1) {
+                         voicingType = 'full';
+                     }
+                 } else if (chordType === 'maj7') {
+                     if (tensionTypes.includes('9') && tensionTypes.length === 1) {
+                         voicingType = 'with9';
+                     } else if (tensionTypes.includes('#11')) {
+                         voicingType = 'with#11';
+                     } else if (tensionTypes.length > 1) {
+                         voicingType = 'full';
+                     }
+                 } else if (chordType === 'm7') {
+                     if (tensionTypes.includes('9') && tensionTypes.length === 1) {
+                         voicingType = 'with9';
+                     } else if (tensionTypes.includes('11')) {
+                         voicingType = 'with11';
+                     } else if (tensionTypes.length > 1) {
+                         voicingType = 'full';
+                     }
+                 }
+             }
+             
+             // Show corresponding voicing
+             showVoicing(chordType, voicingType);
+             
+             // Update voicing tabs
+             const tabs = document.querySelectorAll(`#${chordType} .voicing-tab`);
+             tabs.forEach(tab => tab.classList.remove('active'));
+             const targetTab = document.querySelector(`#${chordType} .voicing-tab[onclick*="${voicingType}"]`);
+             if (targetTab) targetTab.classList.add('active');
+         }
+
+        function getNoteName(noteType) {
+            const names = {
+                'root': 'ریشه',
+                'third': 'ترس',
+                'fifth': 'کوینت',
+                'seventh': 'سپتم',
+                'tension': 'تنش'
+            };
+            return names[noteType] || noteType;
+        }
+
+        function getDifficultyText(difficulty) {
+            const texts = {
+                'easy': 'آسان',
+                'medium': 'متوسط',
+                'hard': 'سخت'
+            };
+            return texts[difficulty] || difficulty;
         }
         
         // Show first chord by default
