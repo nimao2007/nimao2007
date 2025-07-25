@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>آکوردها و تنش‌های مجاز - راهنمای گیتار</title>
+    <script src="https://unpkg.com/vexchords/releases/vexchords-min.js"></script>
     <style>
         body {
             font-family: 'Tahoma', Arial, sans-serif;
@@ -187,180 +188,65 @@
             line-height: 1.4;
         }
         
-        .chord-chart {
+        .vex-chord-container {
             background: white;
             border: 2px solid #34495e;
             border-radius: 8px;
             padding: 20px;
-            margin: 15px 0;
-            max-width: 200px;
             margin: 15px auto;
-        }
-        
-        .chart-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-        }
-        
-        .chord-name-chart {
-            font-weight: bold;
-            font-size: 14px;
-            color: #2c3e50;
-        }
-        
-        .fret-position {
-            font-size: 12px;
-            color: #7f8c8d;
-        }
-        
-        .string-indicators {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 10px;
-            font-size: 12px;
-            font-weight: bold;
-        }
-        
-        .string-indicator {
-            width: 20px;
+            max-width: 250px;
             text-align: center;
-            color: #2c3e50;
         }
         
-        .string-indicator.muted {
-            color: #e74c3c;
-        }
-        
-        .string-indicator.open {
-            color: #27ae60;
-        }
-        
-        .fretboard-chart {
-            position: relative;
-            border: 2px solid #2c3e50;
-            border-radius: 3px;
-        }
-        
-        .fret-row {
-            display: flex;
-            height: 25px;
-            border-bottom: 1px solid #7f8c8d;
-            position: relative;
-        }
-        
-        .fret-row:last-child {
-            border-bottom: none;
-        }
-        
-        .fret-row.nut {
-            height: 8px;
-            background: #2c3e50;
-            border-bottom: 2px solid #2c3e50;
-        }
-        
-        .string-slot {
-            flex: 1;
-            position: relative;
-            border-left: 1px solid #bdc3c7;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .string-slot:first-child {
-            border-left: none;
-        }
-        
-        .string-slot::after {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 0;
-            right: 0;
-            height: 1px;
-            background: #95a5a6;
-            transform: translateY(-50%);
-        }
-        
-        .finger-dot {
-            width: 16px;
-            height: 16px;
-            border-radius: 50%;
-            position: absolute;
-            z-index: 10;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 9px;
+        .chord-title {
             font-weight: bold;
-            color: white;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            border: 2px solid white;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+            font-size: 16px;
+            color: #2c3e50;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #ecf0f1;
         }
         
-        .finger-dot:hover {
-            transform: scale(1.2);
+        .chord-diagram {
+            margin: 20px 0;
         }
         
-        .finger-dot.root {
-            background: #e74c3c;
-        }
-        
-        .finger-dot.third {
-            background: #3498db;
-        }
-        
-        .finger-dot.fifth {
-            background: #27ae60;
-        }
-        
-        .finger-dot.seventh {
-            background: #9b59b6;
-        }
-        
-        .finger-dot.tension {
-            background: #f39c12;
-            animation: pulse 2s infinite;
-        }
-        
-        @keyframes pulse {
-            0% { box-shadow: 0 0 0 0 rgba(243, 156, 18, 0.7); }
-            70% { box-shadow: 0 0 0 8px rgba(243, 156, 18, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(243, 156, 18, 0); }
-        }
-        
-        .fret-numbers-chart {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 8px;
-            padding: 0 10px;
-            font-size: 11px;
+        .chord-info-details {
+            margin-top: 15px;
+            font-size: 12px;
             color: #7f8c8d;
+            line-height: 1.5;
         }
         
-        .chart-legend {
+        .finger-legend {
             display: flex;
             justify-content: center;
             gap: 15px;
             margin-top: 15px;
             font-size: 11px;
+            flex-wrap: wrap;
         }
         
         .legend-item {
             display: flex;
             align-items: center;
             gap: 5px;
+            padding: 3px 8px;
+            background: #f8f9fa;
+            border-radius: 12px;
         }
         
-        .legend-dot {
-            width: 10px;
-            height: 10px;
+        .legend-color {
+            width: 12px;
+            height: 12px;
             border-radius: 50%;
         }
+        
+        .root-color { background: #e74c3c; }
+        .third-color { background: #3498db; }
+        .fifth-color { background: #27ae60; }
+        .seventh-color { background: #9b59b6; }
+        .tension-color { background: #f39c12; }
         
         .voicing-selector {
             background: #ecf0f1;
@@ -544,29 +430,28 @@
                                 <button class="voicing-tab" onclick="showVoicing('m7', 'with11')">با تنش ۱۱</button>
                                 <button class="voicing-tab" onclick="showVoicing('m7', 'full')">کامل</button>
                             </div>
-                            <div id="m7-chord-chart" class="chord-chart">
-                                <div class="chart-header">
-                                    <div class="chord-name-chart" id="m7-chord-name">Am7</div>
-                                    <div class="fret-position" id="m7-fret-pos">فرت ۱</div>
+                            <div id="m7-chord-container" class="vex-chord-container">
+                                <div class="chord-title" id="m7-chord-title">Am7 پایه</div>
+                                <div class="chord-diagram" id="m7-diagram"></div>
+                                <div class="chord-info-details" id="m7-details">
+                                    <span class="difficulty-indicator difficulty-easy">آسان</span><br>
+                                    ساده‌ترین شکل برای شروع
                                 </div>
-                                <div class="string-indicators" id="m7-string-indicators">
-                                    <span class="string-indicator">E</span>
-                                    <span class="string-indicator">A</span>
-                                    <span class="string-indicator">D</span>
-                                    <span class="string-indicator">G</span>
-                                    <span class="string-indicator">B</span>
-                                    <span class="string-indicator">E</span>
-                                </div>
-                                <div class="fretboard-chart" id="m7-fretboard">
-                                    <!-- Dynamic content will be inserted here -->
-                                </div>
-                                <div class="chart-legend">
+                                <div class="finger-legend">
                                     <div class="legend-item">
-                                        <div class="legend-dot" style="background: #e74c3c;"></div>
+                                        <div class="legend-color root-color"></div>
                                         <span>ریشه</span>
                                     </div>
                                     <div class="legend-item">
-                                        <div class="legend-dot" style="background: #f39c12;"></div>
+                                        <div class="legend-color third-color"></div>
+                                        <span>ترس</span>
+                                    </div>
+                                    <div class="legend-item">
+                                        <div class="legend-color seventh-color"></div>
+                                        <span>سپتم</span>
+                                    </div>
+                                    <div class="legend-item">
+                                        <div class="legend-color tension-color"></div>
                                         <span>تنش</span>
                                     </div>
                                 </div>
@@ -605,29 +490,28 @@
                                 <button class="voicing-tab" onclick="showVoicing('maj7', 'with#11')">با #۱۱</button>
                                 <button class="voicing-tab" onclick="showVoicing('maj7', 'full')">کامل</button>
                             </div>
-                            <div id="maj7-chord-chart" class="chord-chart">
-                                <div class="chart-header">
-                                    <div class="chord-name-chart" id="maj7-chord-name">Cmaj7</div>
-                                    <div class="fret-position" id="maj7-fret-pos">فرت ۱</div>
+                            <div id="maj7-chord-container" class="vex-chord-container">
+                                <div class="chord-title" id="maj7-chord-title">Cmaj7 پایه</div>
+                                <div class="chord-diagram" id="maj7-diagram"></div>
+                                <div class="chord-info-details" id="maj7-details">
+                                    <span class="difficulty-indicator difficulty-easy">آسان</span><br>
+                                    شکل کلاسیک و پرکاربرد
                                 </div>
-                                <div class="string-indicators" id="maj7-string-indicators">
-                                    <span class="string-indicator">E</span>
-                                    <span class="string-indicator">A</span>
-                                    <span class="string-indicator">D</span>
-                                    <span class="string-indicator">G</span>
-                                    <span class="string-indicator">B</span>
-                                    <span class="string-indicator">E</span>
-                                </div>
-                                <div class="fretboard-chart" id="maj7-fretboard">
-                                    <!-- Dynamic content will be inserted here -->
-                                </div>
-                                <div class="chart-legend">
+                                <div class="finger-legend">
                                     <div class="legend-item">
-                                        <div class="legend-dot" style="background: #e74c3c;"></div>
+                                        <div class="legend-color root-color"></div>
                                         <span>ریشه</span>
                                     </div>
                                     <div class="legend-item">
-                                        <div class="legend-dot" style="background: #f39c12;"></div>
+                                        <div class="legend-color third-color"></div>
+                                        <span>ترس</span>
+                                    </div>
+                                    <div class="legend-item">
+                                        <div class="legend-color seventh-color"></div>
+                                        <span>سپتم</span>
+                                    </div>
+                                    <div class="legend-item">
+                                        <div class="legend-color tension-color"></div>
                                         <span>تنش</span>
                                     </div>
                                 </div>
@@ -668,29 +552,28 @@
                                 <button class="voicing-tab" onclick="showVoicing('7', 'alt')">آلترد</button>
                                 <button class="voicing-tab" onclick="showVoicing('7', 'full')">کامل</button>
                             </div>
-                            <div id="7-chord-chart" class="chord-chart">
-                                <div class="chart-header">
-                                    <div class="chord-name-chart" id="7-chord-name">G7</div>
-                                    <div class="fret-position" id="7-fret-pos">فرت ۱</div>
+                            <div id="7-chord-container" class="vex-chord-container">
+                                <div class="chord-title" id="7-chord-title">G7 پایه</div>
+                                <div class="chord-diagram" id="7-diagram"></div>
+                                <div class="chord-info-details" id="7-details">
+                                    <span class="difficulty-indicator difficulty-easy">آسان</span><br>
+                                    کلاسیک‌ترین شکل آکورد ۷
                                 </div>
-                                <div class="string-indicators" id="7-string-indicators">
-                                    <span class="string-indicator">E</span>
-                                    <span class="string-indicator">A</span>
-                                    <span class="string-indicator">D</span>
-                                    <span class="string-indicator">G</span>
-                                    <span class="string-indicator">B</span>
-                                    <span class="string-indicator">E</span>
-                                </div>
-                                <div class="fretboard-chart" id="7-fretboard">
-                                    <!-- Dynamic content will be inserted here -->
-                                </div>
-                                <div class="chart-legend">
+                                <div class="finger-legend">
                                     <div class="legend-item">
-                                        <div class="legend-dot" style="background: #e74c3c;"></div>
+                                        <div class="legend-color root-color"></div>
                                         <span>ریشه</span>
                                     </div>
                                     <div class="legend-item">
-                                        <div class="legend-dot" style="background: #f39c12;"></div>
+                                        <div class="legend-color third-color"></div>
+                                        <span>ترس</span>
+                                    </div>
+                                    <div class="legend-item">
+                                        <div class="legend-color seventh-color"></div>
+                                        <span>سپتم</span>
+                                    </div>
+                                    <div class="legend-item">
+                                        <div class="legend-color tension-color"></div>
                                         <span>تنش</span>
                                     </div>
                                 </div>
@@ -965,44 +848,44 @@
     </div>
     
     <script>
-                // Guitar chord voicings data (Guitar Chart format)
+                // VexChords data format
         const chordVoicings = {
             'm7': {
                 'basic': {
                     name: 'Am7 پایه',
                     difficulty: 'easy',
                     description: 'ساده‌ترین شکل برای شروع',
-                    frets: [0, 0, 2, 0, 1, 0], // E A D G B E
-                    types: ['open', 'root', 'third', 'fifth', 'seventh', 'root'],
-                    startFret: 1,
-                    finger: [null, null, 2, null, 1, null]
+                    chord: [[0, 0], [1, 1], [2, 2], [3, 0], [4, 0], [5, 0]], // [string, fret]
+                    position: 1,
+                    fingers: [0, 1, 2, 0, 0, 0],
+                    noteTypes: ['root', 'seventh', 'third', 'fifth', 'root', 'root']
                 },
                 'with9': {
                     name: 'Am7 با تنش ۹',
                     difficulty: 'medium',
                     description: 'افزودن تنش ۹ برای صدای غنی‌تر',
-                    frets: [3, 0, 2, 2, 1, 3],
-                    types: ['tension', 'root', 'third', 'tension', 'seventh', 'tension'],
-                    startFret: 1,
-                    finger: [3, null, 2, 4, 1, 3]
+                    chord: [[0, 3], [1, 0], [2, 2], [3, 2], [4, 1], [5, 3]],
+                    position: 1,
+                    fingers: [3, 0, 2, 4, 1, 3],
+                    noteTypes: ['tension', 'root', 'third', 'tension', 'seventh', 'tension']
                 },
                 'with11': {
                     name: 'Am7 با تنش ۱۱',
                     difficulty: 'medium',
                     description: 'تنش ۱۱ برای صدای جازی',
-                    frets: [3, 0, 2, 0, 1, 3],
-                    types: ['tension', 'root', 'third', 'fifth', 'seventh', 'tension'],
-                    startFret: 1,
-                    finger: [3, null, 2, null, 1, 3]
+                    chord: [[0, 3], [1, 0], [2, 2], [3, 0], [4, 1], [5, 3]],
+                    position: 1,
+                    fingers: [3, 0, 2, 0, 1, 3],
+                    noteTypes: ['tension', 'root', 'third', 'fifth', 'seventh', 'tension']
                 },
                 'full': {
                     name: 'Am7 کامل',
                     difficulty: 'hard',
                     description: 'همه تنش‌ها در یک آکورد',
-                    frets: [5, 5, 5, 5, 5, -1],
-                    types: ['tension', 'tension', 'seventh', 'third', 'root', 'muted'],
-                    startFret: 5,
-                    finger: [1, 1, 1, 1, 1, null]
+                    chord: [[1, 5], [2, 5], [3, 5], [4, 5], [5, -1]],
+                    position: 5,
+                    fingers: [1, 1, 1, 1, 0],
+                    noteTypes: ['tension', 'seventh', 'third', 'root', 'muted']
                 }
             },
             'maj7': {
@@ -1010,37 +893,37 @@
                     name: 'Cmaj7 پایه',
                     difficulty: 'easy',
                     description: 'شکل کلاسیک و پرکاربرد',
-                    frets: [0, 3, 2, 0, 1, 0],
-                    types: ['seventh', 'fifth', 'root', 'fifth', 'third', 'root'],
-                    startFret: 1,
-                    finger: [null, 3, 2, null, 1, null]
+                    chord: [[0, 0], [1, 3], [2, 2], [3, 0], [4, 1], [5, 0]],
+                    position: 1,
+                    fingers: [0, 3, 2, 0, 1, 0],
+                    noteTypes: ['seventh', 'fifth', 'root', 'fifth', 'third', 'root']
                 },
                 'with9': {
                     name: 'Cmaj7 با تنش ۹',
                     difficulty: 'medium',
                     description: 'افزودن تنش ۹ برای حالت دریمی',
-                    frets: [0, 3, 2, 0, 3, 0],
-                    types: ['seventh', 'fifth', 'root', 'fifth', 'tension', 'root'],
-                    startFret: 1,
-                    finger: [null, 2, 1, null, 3, null]
+                    chord: [[0, 0], [1, 3], [2, 2], [3, 0], [4, 3], [5, 0]],
+                    position: 1,
+                    fingers: [0, 2, 1, 0, 3, 0],
+                    noteTypes: ['seventh', 'fifth', 'root', 'fifth', 'tension', 'root']
                 },
                 'with#11': {
                     name: 'Cmaj7 با #۱۱',
                     difficulty: 'hard',
                     description: 'تنش #۱۱ برای صدای لیدین',
-                    frets: [0, 3, 2, 2, 1, 0],
-                    types: ['seventh', 'fifth', 'root', 'tension', 'third', 'root'],
-                    startFret: 1,
-                    finger: [null, 4, 2, 3, 1, null]
+                    chord: [[0, 0], [1, 3], [2, 2], [3, 2], [4, 1], [5, 0]],
+                    position: 1,
+                    fingers: [0, 4, 2, 3, 1, 0],
+                    noteTypes: ['seventh', 'fifth', 'root', 'tension', 'third', 'root']
                 },
                 'full': {
                     name: 'Cmaj7 کامل',
                     difficulty: 'hard',
                     description: 'آکورد کامل با چندین تنش',
-                    frets: [7, 8, 9, 9, 8, -1],
-                    types: ['seventh', 'tension', 'tension', 'root', 'third', 'muted'],
-                    startFret: 7,
-                    finger: [1, 2, 4, 3, 2, null]
+                    chord: [[0, 7], [1, 8], [2, 9], [3, 9], [4, 8]],
+                    position: 7,
+                    fingers: [1, 2, 4, 3, 2],
+                    noteTypes: ['seventh', 'tension', 'tension', 'root', 'third']
                 }
             },
             '7': {
@@ -1048,37 +931,37 @@
                     name: 'G7 پایه',
                     difficulty: 'easy',
                     description: 'کلاسیک‌ترین شکل آکورد ۷',
-                    frets: [3, 2, 0, 0, 0, 3],
-                    types: ['root', 'root', 'fifth', 'third', 'seventh', 'root'],
-                    startFret: 1,
-                    finger: [3, 2, null, null, null, 4]
+                    chord: [[0, 3], [1, 2], [2, 0], [3, 0], [4, 0], [5, 3]],
+                    position: 1,
+                    fingers: [3, 2, 0, 0, 0, 4],
+                    noteTypes: ['root', 'root', 'fifth', 'third', 'seventh', 'root']
                 },
                 'with9': {
                     name: 'G7 با تنش ۹',
                     difficulty: 'medium',
                     description: 'افزودن تنش ۹ برای صدای سوئینگ',
-                    frets: [3, 2, 0, 2, 0, 3],
-                    types: ['root', 'root', 'fifth', 'tension', 'seventh', 'root'],
-                    startFret: 1,
-                    finger: [3, 1, null, 2, null, 4]
+                    chord: [[0, 3], [1, 2], [2, 0], [3, 2], [4, 0], [5, 3]],
+                    position: 1,
+                    fingers: [3, 1, 0, 2, 0, 4],
+                    noteTypes: ['root', 'root', 'fifth', 'tension', 'seventh', 'root']
                 },
                 'alt': {
                     name: 'G7 آلترد',
                     difficulty: 'hard',
                     description: 'آکورد آلترد با b9 و #11',
-                    frets: [3, 2, 0, 3, 1, -1],
-                    types: ['root', 'root', 'fifth', 'tension', 'tension', 'muted'],
-                    startFret: 1,
-                    finger: [3, 2, null, 4, 1, null]
+                    chord: [[0, 3], [1, 2], [2, 0], [3, 3], [4, 1]],
+                    position: 1,
+                    fingers: [3, 2, 0, 4, 1],
+                    noteTypes: ['root', 'root', 'fifth', 'tension', 'tension']
                 },
                 'full': {
                     name: 'G7 کامل',
                     difficulty: 'hard',
                     description: 'همه تنش‌های ممکن',
-                    frets: [3, 5, 4, 5, 5, -1],
-                    types: ['root', 'tension', 'tension', 'tension', 'seventh', 'muted'],
-                    startFret: 3,
-                    finger: [1, 4, 2, 3, 4, null]
+                    chord: [[0, 3], [1, 5], [2, 4], [3, 5], [4, 5]],
+                    position: 3,
+                    fingers: [1, 4, 2, 3, 4],
+                    noteTypes: ['root', 'tension', 'tension', 'tension', 'seventh']
                 }
             }
         };
@@ -1126,96 +1009,206 @@
             event?.target?.classList.add('active') || 
             document.querySelector(`#${chordType} .voicing-tab`).classList.add('active');
 
-            // Update chord name and fret position
-            document.getElementById(`${chordType}-chord-name`).textContent = voicing.name.split(' ')[0];
-            document.getElementById(`${chordType}-fret-pos`).textContent = `فرت ${voicing.startFret}`;
+            // Update chord title
+            document.getElementById(`${chordType}-chord-title`).textContent = voicing.name;
 
-            // Update string indicators (open/muted)
-            const stringIndicators = document.getElementById(`${chordType}-string-indicators`).children;
-            voicing.frets.forEach((fret, index) => {
-                const indicator = stringIndicators[index];
-                indicator.className = 'string-indicator';
-                if (fret === 0) {
-                    indicator.classList.add('open');
-                    indicator.textContent = indicator.textContent.replace(/[ox]/g, '') + 'o';
-                } else if (fret === -1) {
-                    indicator.classList.add('muted');
-                    indicator.textContent = indicator.textContent.replace(/[ox]/g, '') + 'x';
-                } else {
-                    indicator.textContent = indicator.textContent.replace(/[ox]/g, '');
-                }
-            });
-
-            // Draw fretboard
-            drawFretboard(chordType, voicing);
-
-            // Update info
-            const info = document.getElementById(`${chordType}-voicing-info`);
-            if (info) {
-                info.innerHTML = `
-                    <span class="difficulty-indicator difficulty-${voicing.difficulty}">${getDifficultyText(voicing.difficulty)}</span>
-                    <strong>${voicing.name}:</strong> ${voicing.description}
+            // Update details
+            const details = document.getElementById(`${chordType}-details`);
+            if (details) {
+                details.innerHTML = `
+                    <span class="difficulty-indicator difficulty-${voicing.difficulty}">${getDifficultyText(voicing.difficulty)}</span><br>
+                    ${voicing.description}
                 `;
+            }
+
+            // Draw VexChords diagram
+            drawVexChord(chordType, voicing);
+        }
+
+        function drawVexChord(chordType, voicing) {
+            const diagramContainer = document.getElementById(`${chordType}-diagram`);
+            diagramContainer.innerHTML = '';
+
+            try {
+                // Check if VexChords is available
+                if (typeof VexChords !== 'undefined') {
+                    // Convert our format to VexChords format
+                    const chordDefinition = {
+                        chord: voicing.chord,
+                        position: voicing.position
+                    };
+
+                    // Create and render VexChords
+                    const chord = new VexChords.Chord(chordDefinition);
+                    const renderer = new VexChords.SVGRenderer({
+                        width: 200,
+                        height: 240,
+                        color: '#333333',
+                        backgroundColor: '#ffffff'
+                    });
+
+                    const svg = renderer.draw(chord);
+                    diagramContainer.appendChild(svg);
+
+                    // Add custom styling to SVG elements based on note types
+                    setTimeout(() => {
+                        const circles = svg.querySelectorAll('circle');
+                        voicing.chord.forEach((note, index) => {
+                            if (note[1] > 0 && circles[index]) {
+                                const noteType = voicing.noteTypes[index];
+                                let color = '#95a5a6';
+                                
+                                switch(noteType) {
+                                    case 'root': color = '#e74c3c'; break;
+                                    case 'third': color = '#3498db'; break;
+                                    case 'fifth': color = '#27ae60'; break;
+                                    case 'seventh': color = '#9b59b6'; break;
+                                    case 'tension': color = '#f39c12'; break;
+                                }
+                                
+                                circles[index].setAttribute('fill', color);
+                            }
+                        });
+                    }, 100);
+
+                } else {
+                    throw new Error('VexChords not loaded');
+                }
+
+            } catch (error) {
+                console.warn('VexChords error, using fallback:', error);
+                // Enhanced fallback diagram
+                drawFallbackDiagram(diagramContainer, voicing);
             }
         }
 
-        function drawFretboard(chordType, voicing) {
-            const fretboard = document.getElementById(`${chordType}-fretboard`);
-            fretboard.innerHTML = '';
+        function drawFallbackDiagram(container, voicing) {
+            // Create a simple SVG chord diagram
+            const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+            svg.setAttribute('width', '180');
+            svg.setAttribute('height', '220');
+            svg.setAttribute('viewBox', '0 0 180 220');
+            svg.style.border = '1px solid #ddd';
+            svg.style.borderRadius = '8px';
+            svg.style.backgroundColor = '#ffffff';
 
-            // Determine number of frets to show
-            const maxFret = Math.max(...voicing.frets.filter(f => f > 0));
-            const numFrets = Math.max(4, maxFret - voicing.startFret + 2);
+            // Draw fretboard background
+            const bg = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+            bg.setAttribute('x', '20');
+            bg.setAttribute('y', '30');
+            bg.setAttribute('width', '140');
+            bg.setAttribute('height', '160');
+            bg.setAttribute('fill', '#f8f9fa');
+            bg.setAttribute('stroke', '#2c3e50');
+            bg.setAttribute('stroke-width', '2');
+            svg.appendChild(bg);
 
-            // Add nut if starting from fret 1
-            if (voicing.startFret === 1) {
-                const nutRow = document.createElement('div');
-                nutRow.className = 'fret-row nut';
-                fretboard.appendChild(nutRow);
+            // Draw strings (vertical lines)
+            for (let i = 0; i < 6; i++) {
+                const string = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+                const x = 30 + (i * 22);
+                string.setAttribute('x1', x);
+                string.setAttribute('y1', '30');
+                string.setAttribute('x2', x);
+                string.setAttribute('y2', '190');
+                string.setAttribute('stroke', '#7f8c8d');
+                string.setAttribute('stroke-width', '1.5');
+                svg.appendChild(string);
             }
 
-            // Create fret rows
-            for (let fret = 0; fret < numFrets; fret++) {
-                const fretRow = document.createElement('div');
-                fretRow.className = 'fret-row';
+            // Draw frets (horizontal lines)
+            for (let i = 0; i <= 4; i++) {
+                const fret = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+                const y = 30 + (i * 32);
+                fret.setAttribute('x1', '20');
+                fret.setAttribute('y1', y);
+                fret.setAttribute('x2', '160');
+                fret.setAttribute('y2', y);
+                fret.setAttribute('stroke', '#bdc3c7');
+                fret.setAttribute('stroke-width', i === 0 ? '3' : '1');
+                svg.appendChild(fret);
+            }
+
+            // Draw finger positions
+            voicing.chord.forEach((note, stringIndex) => {
+                const stringX = 30 + (stringIndex * 22);
                 
-                // Create string slots for each string (6 strings)
-                for (let string = 0; string < 6; string++) {
-                    const stringSlot = document.createElement('div');
-                    stringSlot.className = 'string-slot';
+                if (note[1] === 0) {
+                    // Open string - draw circle above nut
+                    const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+                    circle.setAttribute('cx', stringX);
+                    circle.setAttribute('cy', '15');
+                    circle.setAttribute('r', '5');
+                    circle.setAttribute('fill', 'none');
+                    circle.setAttribute('stroke', '#27ae60');
+                    circle.setAttribute('stroke-width', '2');
+                    svg.appendChild(circle);
+                } else if (note[1] > 0) {
+                    // Finger position
+                    const noteType = voicing.noteTypes[stringIndex];
+                    let color = '#95a5a6';
                     
-                    // Check if this string/fret combination should have a finger dot
-                    const currentFret = voicing.startFret + fret;
-                    if (voicing.frets[string] === currentFret) {
-                        const fingerDot = document.createElement('div');
-                        fingerDot.className = `finger-dot ${voicing.types[string]}`;
-                        
-                        // Add finger number or dot
-                        if (voicing.finger[string]) {
-                            fingerDot.textContent = voicing.finger[string];
-                        }
-                        
-                        fingerDot.title = `${getNoteName(voicing.types[string])} - انگشت ${voicing.finger[string] || '?'}`;
-                        stringSlot.appendChild(fingerDot);
+                    switch(noteType) {
+                        case 'root': color = '#e74c3c'; break;
+                        case 'third': color = '#3498db'; break;
+                        case 'fifth': color = '#27ae60'; break;
+                        case 'seventh': color = '#9b59b6'; break;
+                        case 'tension': color = '#f39c12'; break;
                     }
+
+                    const fretY = 30 + ((note[1] - voicing.position + 1) * 32) - 16;
                     
-                    fretRow.appendChild(stringSlot);
+                    const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+                    circle.setAttribute('cx', stringX);
+                    circle.setAttribute('cy', fretY);
+                    circle.setAttribute('r', '8');
+                    circle.setAttribute('fill', color);
+                    circle.setAttribute('stroke', '#ffffff');
+                    circle.setAttribute('stroke-width', '2');
+                    svg.appendChild(circle);
+
+                    // Add finger number
+                    if (voicing.fingers[stringIndex] > 0) {
+                        const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+                        text.setAttribute('x', stringX);
+                        text.setAttribute('y', fretY + 3);
+                        text.setAttribute('text-anchor', 'middle');
+                        text.setAttribute('font-family', 'Arial, sans-serif');
+                        text.setAttribute('font-size', '10');
+                        text.setAttribute('font-weight', 'bold');
+                        text.setAttribute('fill', '#ffffff');
+                        text.textContent = voicing.fingers[stringIndex];
+                        svg.appendChild(text);
+                    }
+                } else if (note[1] === -1) {
+                    // Muted string - draw X above nut
+                    const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+                    text.setAttribute('x', stringX);
+                    text.setAttribute('y', '18');
+                    text.setAttribute('text-anchor', 'middle');
+                    text.setAttribute('font-family', 'Arial, sans-serif');
+                    text.setAttribute('font-size', '12');
+                    text.setAttribute('font-weight', 'bold');
+                    text.setAttribute('fill', '#e74c3c');
+                    text.textContent = '×';
+                    svg.appendChild(text);
                 }
-                
-                fretboard.appendChild(fretRow);
+            });
+
+            // Add fret position number if not starting from fret 1
+            if (voicing.position > 1) {
+                const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+                text.setAttribute('x', '10');
+                text.setAttribute('y', '65');
+                text.setAttribute('font-family', 'Arial, sans-serif');
+                text.setAttribute('font-size', '12');
+                text.setAttribute('font-weight', 'bold');
+                text.setAttribute('fill', '#2c3e50');
+                text.textContent = voicing.position + 'fr';
+                svg.appendChild(text);
             }
 
-            // Add fret numbers if not starting from fret 1
-            if (voicing.startFret > 1) {
-                const fretNumbers = document.createElement('div');
-                fretNumbers.className = 'fret-numbers-chart';
-                for (let i = 0; i < numFrets; i++) {
-                    const span = document.createElement('span');
-                    span.textContent = voicing.startFret + i;
-                    fretNumbers.appendChild(span);
-                }
-                fretboard.appendChild(fretNumbers);
-            }
+            container.appendChild(svg);
         }
 
                  function addTension(chordType, tension) {
