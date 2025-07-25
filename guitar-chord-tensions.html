@@ -1,0 +1,2128 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>راهنمای جامع تنش‌های آکورد گیتار - یافتن بهترین Voicing ها</title>
+    <script src="https://unpkg.com/vexchords/releases/vexchords-min.js"></script>
+    <style>
+        body {
+            font-family: 'Tahoma', Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(45deg, #2c3e50, #34495e);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            margin: 0;
+            font-size: 2.2em;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .header p {
+            margin: 10px 0 0 0;
+            opacity: 0.9;
+            font-size: 1.1em;
+        }
+        
+        .main-content {
+            padding: 30px;
+        }
+        
+        .chord-selector {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            border: 2px solid #e9ecef;
+        }
+        
+        .chord-selector h2 {
+            margin-top: 0;
+            color: #2c3e50;
+            font-size: 1.4em;
+        }
+        
+        .chord-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .chord-button {
+            background: linear-gradient(45deg, #3498db, #2980b9);
+            color: white;
+            border: none;
+            padding: 15px 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        .chord-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(0,0,0,0.2);
+            background: linear-gradient(45deg, #2980b9, #3498db);
+        }
+        
+        .chord-button.active {
+            background: linear-gradient(45deg, #e74c3c, #c0392b);
+            transform: translateY(-2px);
+        }
+        
+        .chord-info {
+            display: none;
+            background: white;
+            border: 2px solid #3498db;
+            border-radius: 10px;
+            padding: 25px;
+            margin-top: 20px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        
+        .chord-info.active {
+            display: block;
+            animation: slideIn 0.5s ease;
+        }
+        
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .chord-name {
+            font-size: 2em;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            text-align: center;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 10px;
+        }
+        
+        .chord-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-top: 20px;
+        }
+        
+        .tensions-section, .fingering-section {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #3498db;
+        }
+        
+        .section-title {
+            font-size: 1.3em;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .section-title::before {
+            content: "🎵";
+            margin-left: 10px;
+        }
+        
+        .fingering-section .section-title::before {
+            content: "🎸";
+        }
+        
+        .tension-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+        
+        .tension-tag {
+            background: linear-gradient(45deg, #27ae60, #2ecc71);
+            color: white;
+            padding: 8px 12px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: bold;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .fingering-diagram {
+            background: white;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 10px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            line-height: 1.4;
+        }
+        
+        .vex-chord-container {
+            background: white;
+            border: 2px solid #34495e;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 15px auto;
+            max-width: 300px;
+            text-align: center;
+        }
+        
+        .string-labels-top {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-size: 12px;
+            font-weight: bold;
+            color: #2c3e50;
+            padding: 0 15px;
+        }
+        
+        .fret-labels-side {
+            position: absolute;
+            left: -25px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+            font-size: 10px;
+            color: #7f8c8d;
+            font-weight: bold;
+        }
+        
+        .diagram-wrapper {
+            position: relative;
+            margin: 20px 0;
+        }
+        
+        .chord-title {
+            font-weight: bold;
+            font-size: 16px;
+            color: #2c3e50;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #ecf0f1;
+        }
+        
+        .chord-diagram {
+            margin: 20px 0;
+        }
+        
+        .chord-info-details {
+            margin-top: 15px;
+            font-size: 12px;
+            color: #7f8c8d;
+            line-height: 1.5;
+        }
+        
+        .finger-legend {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 15px;
+            font-size: 11px;
+            flex-wrap: wrap;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            padding: 3px 8px;
+            background: #f8f9fa;
+            border-radius: 12px;
+        }
+        
+        .legend-color {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+        
+        .root-color { background: #e74c3c; }
+        .third-color { background: #3498db; }
+        .fifth-color { background: #27ae60; }
+        .seventh-color { background: #9b59b6; }
+        .tension-color { background: #f39c12; }
+        
+        .interval-section {
+            background: #ecf0f1;
+            padding: 25px;
+            border-radius: 15px;
+            margin: 30px 0;
+        }
+        
+        .interval-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .interval-card {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            border-left: 4px solid #3498db;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .interval-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .interval-card.active {
+            border-left-color: #e74c3c;
+            background: #fdf2f2;
+        }
+        
+        .interval-name {
+            font-weight: bold;
+            font-size: 1.1em;
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+        
+        .interval-description {
+            font-size: 0.9em;
+            color: #7f8c8d;
+            line-height: 1.4;
+        }
+        
+        .voicing-comparison {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 15px;
+        }
+        
+        .voicing-option {
+            background: white;
+            border: 2px solid #bdc3c7;
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .voicing-option:hover {
+            border-color: #3498db;
+            transform: scale(1.02);
+        }
+        
+        .voicing-option.recommended {
+            border-color: #27ae60;
+            background: #eafaf1;
+        }
+        
+        .voicing-option.advanced {
+            border-color: #f39c12;
+            background: #fef9e7;
+        }
+        
+        .voicing-option.difficult {
+            border-color: #e74c3c;
+            background: #fdf2f2;
+        }
+        
+        .fingering-difficulty {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 0.8em;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .ergonomic-tips {
+            background: linear-gradient(45deg, #16a085, #2ecc71);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        
+        .voicing-selector {
+            background: #ecf0f1;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+        
+        .voicing-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .voicing-tab {
+            background: #95a5a6;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.9em;
+            transition: all 0.3s ease;
+            border: none;
+        }
+        
+        .voicing-tab.active {
+            background: #3498db;
+            transform: translateY(-2px);
+        }
+        
+        .voicing-tab:hover {
+            background: #34495e;
+        }
+        
+        .tension-tag.clickable {
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .tension-tag.clickable:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        
+        .tension-tag.active {
+            background: linear-gradient(45deg, #e74c3c, #c0392b);
+            animation: pulse 1s infinite;
+        }
+        
+        .voicing-info {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #3498db;
+            margin-top: 10px;
+        }
+        
+        .difficulty-indicator {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 0.8em;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        
+        .difficulty-easy {
+            background: #2ecc71;
+            color: white;
+        }
+        
+        .difficulty-medium {
+            background: #f39c12;
+            color: white;
+        }
+        
+        .difficulty-hard {
+            background: #e74c3c;
+            color: white;
+        }
+        
+        .fret-number {
+            color: #e74c3c;
+            font-weight: bold;
+        }
+        
+        .note-info {
+            background: #ecf0f1;
+            padding: 15px;
+            border-radius: 6px;
+            margin-top: 15px;
+            font-size: 0.95em;
+            line-height: 1.6;
+        }
+        
+        .tips {
+            background: linear-gradient(45deg, #f39c12, #e67e22);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 30px;
+        }
+        
+        .tips h3 {
+            margin-top: 0;
+            font-size: 1.2em;
+        }
+        
+        .tips ul {
+            margin: 10px 0;
+            padding-right: 20px;
+        }
+        
+        .tips li {
+            margin-bottom: 8px;
+        }
+        
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            
+            .chord-details {
+                grid-template-columns: 1fr;
+            }
+            
+            .chord-grid {
+                grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>راهنمای علمی تنش‌های آکورد گیتار</h1>
+            <p>یافتن بهترین Voicing ها و تصویرسازی تنش‌ها روی دسته گیتار</p>
+            <div style="margin-top: 15px; font-size: 0.9em; opacity: 0.9;">
+                <span>🎯 تئوری موسیقی</span> • 
+                <span>🎸 تصویرسازی فرت‌بورد</span> • 
+                <span>✋ موقعیت‌یابی ارگونومیک انگشت‌ها</span>
+            </div>
+        </div>
+        
+        <div class="main-content">
+            <!-- Theory and Best Practices Section -->
+            <div class="theory-section" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px; border-radius: 15px; margin-bottom: 30px;">
+                <h2 style="margin-top: 0; text-align: center; font-size: 1.8em;">🎓 علم استفاده از دیاگرام‌های گیتار برای تنش‌ها</h2>
+                
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; margin-top: 25px;">
+                    <div style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 10px;">
+                        <h3 style="margin-top: 0; color: #f1c40f;">🎯 دانش تئوری موسیقی</h3>
+                        <ul style="line-height: 1.8;">
+                            <li><strong>فاصله‌ها (Intervals):</strong> درک فاصله هر تنش نسبت به ریشه</li>
+                            <li><strong>مقام‌ها (Modes):</strong> تنش‌های مجاز در هر مقام</li>
+                            <li><strong>پیشرفت هارمونیک:</strong> تنش‌های مناسب در هر زمینه</li>
+                            <li><strong>قوانین صدایی (Voice Leading):</strong> حرکت نرم بین آکوردها</li>
+                        </ul>
+                    </div>
+                    
+                    <div style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 10px;">
+                        <h3 style="margin-top: 0; color: #e74c3c;">🎸 تصویرسازی فرت‌بورد</h3>
+                        <ul style="line-height: 1.8;">
+                            <li><strong>الگوهای CAGED:</strong> ۵ شکل اصلی برای هر آکورد</li>
+                            <li><strong>موقعیت‌های مختلف:</strong> آکورد یکسان در جاهای مختلف</li>
+                            <li><strong>ترکیب تنش‌ها:</strong> افزودن تدریجی 9th, 11th, 13th</li>
+                            <li><strong>حذف نت‌ها:</strong> چه نت‌هایی قابل حذف هستند</li>
+                        </ul>
+                    </div>
+                    
+                    <div style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 10px;">
+                        <h3 style="margin-top: 0; color: #27ae60;">✋ ارگونومی انگشت‌ها</h3>
+                        <ul style="line-height: 1.8;">
+                            <li><strong>دسترسی راحت:</strong> کمترین حرکت دست</li>
+                            <li><strong>قدرت انگشت‌ها:</strong> استفاده بهینه از انگشت شصت و انگشت کوچک</li>
+                            <li><strong>تغییر سریع:</strong> voicing هایی که تغییر آسان دارند</li>
+                            <li><strong>تکنیک barre:</strong> استفاده مؤثر از barre</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div style="background: rgba(255,255,255,0.15); padding: 20px; border-radius: 10px; margin-top: 25px; text-align: center;">
+                    <h3 style="margin-top: 0; color: #f39c12;">⭐ قوانین طلایی برای انتخاب بهترین Voicing</h3>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px; margin-top: 15px;">
+                        <div><strong>۱.</strong> ریشه در بیس (معمولاً)</div>
+                        <div><strong>۲.</strong> تنش‌ها در صدای بالا</div>
+                        <div><strong>۳.</strong> حذف کوینت در آکوردهای 7th</div>
+                        <div><strong>۴.</strong> حفظ نت‌های راهنما (3rd & 7th)</div>
+                        <div><strong>۵.</strong> کمترین حرکت انگشت‌ها</div>
+                        <div><strong>۶.</strong> توجه به محدوده صدا</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="chord-selector">
+                <h2>آکورد مورد نظر را انتخاب کنید:</h2>
+                <div class="chord-grid">
+                    <button class="chord-button" onclick="showChord('m7')">m7</button>
+                    <button class="chord-button" onclick="showChord('maj7')">maj7</button>
+                    <button class="chord-button" onclick="showChord('7')">7</button>
+                    <button class="chord-button" onclick="showChord('mMaj7')">mMaj7</button>
+                    <button class="chord-button" onclick="showChord('m6')">m6</button>
+                    <button class="chord-button" onclick="showChord('6')">6</button>
+                    <button class="chord-button" onclick="showChord('dim7')">dim7</button>
+                    <button class="chord-button" onclick="showChord('m7b5')">m7(b5)</button>
+                    <button class="chord-button" onclick="showChord('7sus4')">7sus4</button>
+                    <button class="chord-button" onclick="showChord('maj7#5')">maj7(#5)</button>
+                </div>
+            </div>
+
+            <!-- Interactive Interval Learning Section -->
+            <div class="interval-section">
+                <h2 style="margin-top: 0; color: #2c3e50; text-align: center;">🎼 آموزش تعاملی فاصله‌ها و تنش‌ها</h2>
+                <p style="text-align: center; color: #7f8c8d; margin-bottom: 25px;">
+                    روی هر فاصله کلیک کنید تا موقعیت آن روی فرت‌بورد و کاربرد در آکوردها را ببینید
+                </p>
+                
+                <div class="interval-grid">
+                    <div class="interval-card" onclick="showInterval('root')">
+                        <div class="interval-name">ریشه (Root)</div>
+                        <div class="interval-description">نت پایه آکورد - همیشه حضور دارد</div>
+                    </div>
+                    <div class="interval-card" onclick="showInterval('ninth')">
+                        <div class="interval-name">نهم (9th)</div>
+                        <div class="interval-description">دو (2) یک اکتاو بالاتر - رنگ شیرین</div>
+                    </div>
+                    <div class="interval-card" onclick="showInterval('eleventh')">
+                        <div class="interval-name">یازدهم (11th)</div>
+                        <div class="interval-description">چهارم (4) یک اکتاو بالاتر - صدای تعلیق</div>
+                    </div>
+                    <div class="interval-card" onclick="showInterval('thirteenth')">
+                        <div class="interval-name">سیزدهم (13th)</div>
+                        <div class="interval-description">ششم (6) یک اکتاو بالاتر - کامل کننده</div>
+                    </div>
+                </div>
+                
+                <div id="interval-display" style="margin-top: 25px; padding: 20px; background: white; border-radius: 10px; display: none;">
+                    <h3 id="interval-title" style="margin-top: 0;"></h3>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                        <div>
+                            <h4>موقعیت روی فرت‌بورد:</h4>
+                            <div id="fretboard-positions"></div>
+                        </div>
+                        <div>
+                            <h4>کاربرد در آکوردها:</h4>
+                            <div id="chord-applications"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Voicing Comparison Tool -->
+            <div class="voicing-comparison">
+                <h2 style="margin-top: 0; color: #2c3e50; text-align: center;">⚖️ مقایسه Voicing های مختلف</h2>
+                <p style="text-align: center; color: #7f8c8d; margin-bottom: 20px;">
+                    برای هر آکورد، بهترین voicing را بر اساس موقعیت، سختی و صدا انتخاب کنید
+                </p>
+                
+                <div class="comparison-grid">
+                    <div class="voicing-option recommended" onclick="showVoicingTips('close')">
+                        <div class="fingering-difficulty" style="background: #27ae60; color: white;">توصیه شده</div>
+                        <h4 style="margin: 10px 0;">Close Voicing</h4>
+                        <p style="font-size: 0.9em; line-height: 1.4;">
+                            نت‌ها در یک اکتاو - صدای متمرکز<br>
+                            🎯 مناسب برای: کمبو، تنها‌نوازی<br>
+                            ✋ سختی: آسان تا متوسط
+                        </p>
+                    </div>
+                    
+                    <div class="voicing-option advanced" onclick="showVoicingTips('open')">
+                        <div class="fingering-difficulty" style="background: #f39c12; color: white;">پیشرفته</div>
+                        <h4 style="margin: 10px 0;">Open Voicing</h4>
+                        <p style="font-size: 0.9em; line-height: 1.4;">
+                            نت‌ها در چند اکتاو - صدای باز<br>
+                            🎯 مناسب برای: بیگ بند، ارکستر<br>
+                            ✋ سختی: متوسط تا سخت
+                        </p>
+                    </div>
+                    
+                    <div class="voicing-option difficult" onclick="showVoicingTips('rootless')">
+                        <div class="fingering-difficulty" style="background: #e74c3c; color: white;">حرفه‌ای</div>
+                        <h4 style="margin: 10px 0;">Rootless Voicing</h4>
+                        <p style="font-size: 0.9em; line-height: 1.4;">
+                            بدون ریشه - تنها رنگ‌ها<br>
+                            🎯 مناسب برای: کمبو جاز، پیانو تریو<br>
+                            ✋ سختی: سخت
+                        </p>
+                    </div>
+                </div>
+                
+                <div id="voicing-tips" style="margin-top: 20px; padding: 15px; background: #fff; border-radius: 8px; display: none;"></div>
+            </div>
+
+            <!-- Ergonomic Guidelines -->
+            <div class="ergonomic-tips">
+                <h3 style="margin-top: 0;">✋ راهنمای ارگونومی برای انتخاب بهترین Voicing</h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin-top: 15px;">
+                    <div>
+                        <h4 style="color: #f1c40f;">🖐️ استفاده بهینه از انگشت‌ها</h4>
+                        <ul style="line-height: 1.6;">
+                            <li>انگشت شصت برای بیس و barre</li>
+                            <li>انگشت اشاره برای فرت‌های پایین</li>
+                            <li>انگشت وسط و حلقه برای ملودی</li>
+                            <li>انگشت کوچک برای تنش‌ها</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 style="color: #e74c3c;">🎯 انتخاب موقعیت</h4>
+                        <ul style="line-height: 1.6;">
+                            <li>فرت‌های ۳-۷: آسان‌ترین دسترسی</li>
+                            <li>فرت‌های ۸-۱۲: صدای گرم</li>
+                            <li>فرت‌های بالا: برای سولو</li>
+                            <li>موقعیت باز: برای ریتم</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 style="color: #3498db;">🔄 تغییر سریع آکوردها</h4>
+                        <ul style="line-height: 1.6;">
+                            <li>انگشت‌های مشترک را حفظ کنید</li>
+                            <li>کمترین حرکت دست</li>
+                            <li>از الگوهای CAGED استفاده کنید</li>
+                            <li>تمرین آهسته تا سریع</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- m7 Chord -->
+            <div id="m7" class="chord-info">
+                <div class="chord-name">Minor 7 (m7)</div>
+                <div class="chord-details">
+                    <div class="tensions-section">
+                        <div class="section-title">تنش‌های مجاز</div>
+                        <div class="tension-tags">
+                            <span class="tension-tag clickable" onclick="addTension('m7', '9')">9</span>
+                            <span class="tension-tag clickable" onclick="addTension('m7', '11')">11</span>
+                            <span class="tension-tag clickable" onclick="addTension('m7', '13')">13</span>
+                        </div>
+                        <div class="note-info">
+                            <strong>ساختار پایه:</strong> ۱ - ♭۳ - ۵ - ♭۷<br>
+                            <strong>با تنش‌ها:</strong> ۱ - ♭۳ - ۵ - ♭۷ - ۹ - ۱۱ - ۱۳
+                        </div>
+                    </div>
+                    <div class="fingering-section">
+                        <div class="section-title">نحوه اجرا</div>
+                        <div class="voicing-selector">
+                            <div class="voicing-tabs">
+                                <button class="voicing-tab active" onclick="showVoicing('m7', 'basic')">پایه</button>
+                                <button class="voicing-tab" onclick="showVoicing('m7', 'with9')">با تنش ۹</button>
+                                <button class="voicing-tab" onclick="showVoicing('m7', 'with11')">با تنش ۱۱</button>
+                                <button class="voicing-tab" onclick="showVoicing('m7', 'full')">کامل</button>
+                            </div>
+                            <div id="m7-chord-container" class="vex-chord-container">
+                                <div class="chord-title" id="m7-chord-title">Am7 پایه</div>
+                                <div class="string-labels-top">
+                                    <span>E</span><span>A</span><span>D</span><span>G</span><span>B</span><span>E</span>
+                                </div>
+                                <div class="diagram-wrapper">
+                                    <div class="chord-diagram" id="m7-diagram"></div>
+                                </div>
+                                <div class="chord-info-details" id="m7-details">
+                                    <span class="difficulty-indicator difficulty-easy">آسان</span><br>
+                                    ساده‌ترین شکل برای شروع
+                                </div>
+                                <div class="finger-legend">
+                                    <div class="legend-item">
+                                        <div class="legend-color root-color"></div>
+                                        <span>ریشه</span>
+                                    </div>
+                                    <div class="legend-item">
+                                        <div class="legend-color third-color"></div>
+                                        <span>ترس</span>
+                                    </div>
+                                    <div class="legend-item">
+                                        <div class="legend-color seventh-color"></div>
+                                        <span>سپتم</span>
+                                    </div>
+                                    <div class="legend-item">
+                                        <div class="legend-color tension-color"></div>
+                                        <span>تنش</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="m7-voicing-info" class="voicing-info">
+                                <span class="difficulty-indicator difficulty-easy">آسان</span>
+                                <strong>Am7 پایه:</strong> ساده‌ترین شکل برای شروع
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- maj7 Chord -->
+            <div id="maj7" class="chord-info">
+                <div class="chord-name">Major 7 (maj7)</div>
+                <div class="chord-details">
+                    <div class="tensions-section">
+                        <div class="section-title">تنش‌های مجاز</div>
+                        <div class="tension-tags">
+                            <span class="tension-tag clickable" onclick="addTension('maj7', '9')">9</span>
+                            <span class="tension-tag clickable" onclick="addTension('maj7', '#11')">#11</span>
+                            <span class="tension-tag clickable" onclick="addTension('maj7', '13')">13</span>
+                        </div>
+                        <div class="note-info">
+                            <strong>ساختار پایه:</strong> ۱ - ۳ - ۵ - ۷<br>
+                            <strong>با تنش‌ها:</strong> ۱ - ۳ - ۵ - ۷ - ۹ - #۱۱ - ۱۳
+                        </div>
+                    </div>
+                    <div class="fingering-section">
+                        <div class="section-title">نحوه اجرا</div>
+                        <div class="voicing-selector">
+                            <div class="voicing-tabs">
+                                <button class="voicing-tab active" onclick="showVoicing('maj7', 'basic')">پایه</button>
+                                <button class="voicing-tab" onclick="showVoicing('maj7', 'with9')">با تنش ۹</button>
+                                <button class="voicing-tab" onclick="showVoicing('maj7', 'with#11')">با #۱۱</button>
+                                <button class="voicing-tab" onclick="showVoicing('maj7', 'full')">کامل</button>
+                            </div>
+                            <div id="maj7-chord-container" class="vex-chord-container">
+                                <div class="chord-title" id="maj7-chord-title">Cmaj7 پایه</div>
+                                <div class="string-labels-top">
+                                    <span>E</span><span>A</span><span>D</span><span>G</span><span>B</span><span>E</span>
+                                </div>
+                                <div class="diagram-wrapper">
+                                    <div class="chord-diagram" id="maj7-diagram"></div>
+                                </div>
+                                <div class="chord-info-details" id="maj7-details">
+                                    <span class="difficulty-indicator difficulty-easy">آسان</span><br>
+                                    شکل کلاسیک و پرکاربرد
+                                </div>
+                                <div class="finger-legend">
+                                    <div class="legend-item">
+                                        <div class="legend-color root-color"></div>
+                                        <span>ریشه</span>
+                                    </div>
+                                    <div class="legend-item">
+                                        <div class="legend-color third-color"></div>
+                                        <span>ترس</span>
+                                    </div>
+                                    <div class="legend-item">
+                                        <div class="legend-color seventh-color"></div>
+                                        <span>سپتم</span>
+                                    </div>
+                                    <div class="legend-item">
+                                        <div class="legend-color tension-color"></div>
+                                        <span>تنش</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="maj7-voicing-info" class="voicing-info">
+                                <span class="difficulty-indicator difficulty-easy">آسان</span>
+                                <strong>Cmaj7 پایه:</strong> شکل کلاسیک و پرکاربرد
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 7 Chord -->
+            <div id="7" class="chord-info">
+                <div class="chord-name">Dominant 7 (7)</div>
+                <div class="chord-details">
+                    <div class="tensions-section">
+                        <div class="section-title">تنش‌های مجاز</div>
+                        <div class="tension-tags">
+                            <span class="tension-tag clickable" onclick="addTension('7', '9')">9</span>
+                            <span class="tension-tag clickable" onclick="addTension('7', 'b9')">b9</span>
+                            <span class="tension-tag clickable" onclick="addTension('7', '#11')">#11</span>
+                            <span class="tension-tag clickable" onclick="addTension('7', '13')">13</span>
+                            <span class="tension-tag clickable" onclick="addTension('7', 'b13')">b13</span>
+                        </div>
+                        <div class="note-info">
+                            <strong>ساختار پایه:</strong> ۱ - ۳ - ۵ - ♭۷<br>
+                            <strong>تنوع بالا:</strong> بیشترین گزینه‌های تنش در میان آکوردها
+                        </div>
+                    </div>
+                    <div class="fingering-section">
+                        <div class="section-title">نحوه اجرا</div>
+                        <div class="voicing-selector">
+                            <div class="voicing-tabs">
+                                <button class="voicing-tab active" onclick="showVoicing('7', 'basic')">پایه</button>
+                                <button class="voicing-tab" onclick="showVoicing('7', 'with9')">با تنش ۹</button>
+                                <button class="voicing-tab" onclick="showVoicing('7', 'alt')">آلترد</button>
+                                <button class="voicing-tab" onclick="showVoicing('7', 'full')">کامل</button>
+                            </div>
+                            <div id="7-chord-container" class="vex-chord-container">
+                                <div class="chord-title" id="7-chord-title">G7 پایه</div>
+                                <div class="string-labels-top">
+                                    <span>E</span><span>A</span><span>D</span><span>G</span><span>B</span><span>E</span>
+                                </div>
+                                <div class="diagram-wrapper">
+                                    <div class="chord-diagram" id="7-diagram"></div>
+                                </div>
+                                <div class="chord-info-details" id="7-details">
+                                    <span class="difficulty-indicator difficulty-easy">آسان</span><br>
+                                    کلاسیک‌ترین شکل آکورد ۷
+                                </div>
+                                <div class="finger-legend">
+                                    <div class="legend-item">
+                                        <div class="legend-color root-color"></div>
+                                        <span>ریشه</span>
+                                    </div>
+                                    <div class="legend-item">
+                                        <div class="legend-color third-color"></div>
+                                        <span>ترس</span>
+                                    </div>
+                                    <div class="legend-item">
+                                        <div class="legend-color seventh-color"></div>
+                                        <span>سپتم</span>
+                                    </div>
+                                    <div class="legend-item">
+                                        <div class="legend-color tension-color"></div>
+                                        <span>تنش</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="7-voicing-info" class="voicing-info">
+                                <span class="difficulty-indicator difficulty-easy">آسان</span>
+                                <strong>G7 پایه:</strong> کلاسیک‌ترین شکل آکورد ۷
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- mMaj7 Chord -->
+            <div id="mMaj7" class="chord-info">
+                <div class="chord-name">Minor Major 7 (mMaj7)</div>
+                <div class="chord-details">
+                    <div class="tensions-section">
+                        <div class="section-title">تنش‌های مجاز</div>
+                        <div class="tension-tags">
+                            <span class="tension-tag clickable" onclick="addTension('mMaj7', '9')">9</span>
+                            <span class="tension-tag clickable" onclick="addTension('mMaj7', '11')">11</span>
+                            <span class="tension-tag clickable" onclick="addTension('mMaj7', '13')">13</span>
+                        </div>
+                        <div class="note-info">
+                            <strong>ساختار پایه:</strong> ۱ - ♭۳ - ۵ - ۷<br>
+                            <strong>حالت خاص:</strong> ترکیب مینور با سپتم ماژور
+                        </div>
+                    </div>
+                    <div class="fingering-section">
+                        <div class="section-title">نحوه اجرا</div>
+                        <div class="voicing-selector">
+                            <div class="voicing-tabs">
+                                <button class="voicing-tab active" onclick="showVoicing('mMaj7', 'basic')">پایه</button>
+                                <button class="voicing-tab" onclick="showVoicing('mMaj7', 'with9')">با تنش ۹</button>
+                                <button class="voicing-tab" onclick="showVoicing('mMaj7', 'with11')">با تنش ۱۱</button>
+                            </div>
+                            <div id="mMaj7-chord-container" class="vex-chord-container">
+                                <div class="chord-title" id="mMaj7-chord-title">AmMaj7 پایه</div>
+                                <div class="string-labels-top">
+                                    <span>E</span><span>A</span><span>D</span><span>G</span><span>B</span><span>E</span>
+                                </div>
+                                <div class="diagram-wrapper">
+                                    <div class="chord-diagram" id="mMaj7-diagram"></div>
+                                </div>
+                                <div class="chord-info-details" id="mMaj7-details">
+                                    <span class="difficulty-indicator difficulty-medium">متوسط</span><br>
+                                    ترکیب منحصر مینور با سپتم ماژور
+                                </div>
+                                <div class="finger-legend">
+                                    <div class="legend-item">
+                                        <div class="legend-color root-color"></div>
+                                        <span>ریشه</span>
+                                    </div>
+                                    <div class="legend-item">
+                                        <div class="legend-color third-color"></div>
+                                        <span>ترس</span>
+                                    </div>
+                                    <div class="legend-item">
+                                        <div class="legend-color seventh-color"></div>
+                                        <span>سپتم</span>
+                                    </div>
+                                    <div class="legend-item">
+                                        <div class="legend-color tension-color"></div>
+                                        <span>تنش</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- m6 Chord -->
+            <div id="m6" class="chord-info">
+                <div class="chord-name">Minor 6 (m6)</div>
+                <div class="chord-details">
+                    <div class="tensions-section">
+                        <div class="section-title">تنش‌های مجاز</div>
+                        <div class="tension-tags">
+                            <span class="tension-tag clickable" onclick="addTension('m6', '9')">9</span>
+                            <span class="tension-tag clickable" onclick="addTension('m6', '11')">11</span>
+                            <span class="tension-tag clickable" onclick="addTension('m6', 'maj7')">maj7</span>
+                        </div>
+                        <div class="note-info">
+                            <strong>ساختار پایه:</strong> ۱ - ♭۳ - ۵ - ۶<br>
+                            <strong>صدای نرم:</strong> جایگزین مناسب برای m7
+                        </div>
+                    </div>
+                    <div class="fingering-section">
+                        <div class="section-title">نحوه اجرا</div>
+                        <div class="fingering-diagram">
+                            مثال در کلید Am6:<br>
+                            E |--5--| (9th)<br>
+                            B |--5--| (6th)<br>
+                            G |--5--| (3rd)<br>
+                            D |--7--| (6th)<br>
+                            A |--0--| (Root)<br>
+                            E |--x--|<br>
+                            <span class="fret-number">فرت 5</span>
+                        </div>
+                        <div class="note-info">
+                            <strong>نکته:</strong> صدای بسیار دلنشین و قابل استفاده در بالادها.
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 6 Chord -->
+            <div id="6" class="chord-info">
+                <div class="chord-name">Major 6 (6)</div>
+                <div class="chord-details">
+                    <div class="tensions-section">
+                        <div class="section-title">تنش‌های مجاز</div>
+                        <div class="tension-tags">
+                            <span class="tension-tag">9</span>
+                            <span class="tension-tag">#11</span>
+                            <span class="tension-tag">maj7</span>
+                        </div>
+                        <div class="note-info">
+                            <strong>ساختار پایه:</strong> ۱ - ۳ - ۵ - ۶<br>
+                            <strong>صدای شاد:</strong> جایگزین عالی برای آکورد ماژور ساده
+                        </div>
+                    </div>
+                    <div class="fingering-section">
+                        <div class="section-title">نحوه اجرا</div>
+                        <div class="fingering-diagram">
+                            مثال در کلید C6:<br>
+                            E |--0--| (6th)<br>
+                            B |--1--| (3rd)<br>
+                            G |--2--| (Root)<br>
+                            D |--2--| (5th)<br>
+                            A |--3--| (Root)<br>
+                            E |--x--|<br>
+                            <span class="fret-number">فرت 2</span>
+                        </div>
+                        <div class="note-info">
+                            <strong>نکته:</strong> آکورد پایانی عالی برای قطعات شاد.
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- dim7 Chord -->
+            <div id="dim7" class="chord-info">
+                <div class="chord-name">Diminished 7 (dim7)</div>
+                <div class="chord-details">
+                    <div class="tensions-section">
+                        <div class="section-title">تنش‌های مجاز</div>
+                        <div class="tension-tags">
+                            <span class="tension-tag">9</span>
+                            <span class="tension-tag">11</span>
+                            <span class="tension-tag">b13</span>
+                            <span class="tension-tag">maj7</span>
+                        </div>
+                        <div class="note-info">
+                            <strong>ساختار پایه:</strong> ۱ - ♭۳ - ♭۵ - ♭♭۷<br>
+                            <strong>تقارن:</strong> هر ۳ فرت تکرار می‌شود
+                        </div>
+                    </div>
+                    <div class="fingering-section">
+                        <div class="section-title">نحوه اجرا</div>
+                        <div class="fingering-diagram">
+                            مثال Adim7:<br>
+                            E |--2--| (bb7)<br>
+                            B |--0--| (b5)<br>
+                            G |--1--| (b3)<br>
+                            D |--2--| (Root)<br>
+                            A |--x--|<br>
+                            E |--x--|<br>
+                            <span class="fret-number">فرت 2</span>
+                        </div>
+                        <div class="note-info">
+                            <strong>نکته:</strong> آکورد عبوری بسیار مؤثر در پیشرفت‌های هارمونیک.
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- m7b5 Chord -->
+            <div id="m7b5" class="chord-info">
+                <div class="chord-name">Half Diminished (m7♭5)</div>
+                <div class="chord-details">
+                    <div class="tensions-section">
+                        <div class="section-title">تنش‌های مجاز</div>
+                        <div class="tension-tags">
+                            <span class="tension-tag">9</span>
+                            <span class="tension-tag">11</span>
+                            <span class="tension-tag">b13</span>
+                        </div>
+                        <div class="note-info">
+                            <strong>ساختار پایه:</strong> ۱ - ♭۳ - ♭۵ - ♭۷<br>
+                            <strong>کاربرد:</strong> درجه دوم در مقام‌های مینور
+                        </div>
+                    </div>
+                    <div class="fingering-section">
+                        <div class="section-title">نحوه اجرا</div>
+                        <div class="fingering-diagram">
+                            مثال Bm7b5:<br>
+                            E |--2--| (7th)<br>
+                            B |--3--| (b5)<br>
+                            G |--2--| (b3)<br>
+                            D |--4--| (Root)<br>
+                            A |--2--| (b5)<br>
+                            E |--x--|<br>
+                            <span class="fret-number">فرت 2</span>
+                        </div>
+                        <div class="note-info">
+                            <strong>نکته:</strong> آکورد مهم در توالی ii-V-i در مقام‌های مینور.
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 7sus4 Chord -->
+            <div id="7sus4" class="chord-info">
+                <div class="chord-name">Dominant 7 Suspended 4 (7sus4)</div>
+                <div class="chord-details">
+                    <div class="tensions-section">
+                        <div class="section-title">تنش‌های مجاز</div>
+                        <div class="tension-tags">
+                            <span class="tension-tag">9 یا b9</span>
+                            <span class="tension-tag">3</span>
+                            <span class="tension-tag">13</span>
+                        </div>
+                        <div class="note-info">
+                            <strong>ساختار پایه:</strong> ۱ - ۴ - ۵ - ♭۷<br>
+                            <strong>حالت تعلیق:</strong> تنش طبیعی به سمت تقسیم‌بندی
+                        </div>
+                    </div>
+                    <div class="fingering-section">
+                        <div class="section-title">نحوه اجرا</div>
+                        <div class="fingering-diagram">
+                            مثال G7sus4:<br>
+                            E |--3--| (13th)<br>
+                            B |--1--| (9th)<br>
+                            G |--0--| (7th)<br>
+                            D |--0--| (4th)<br>
+                            A |--2--| (Root)<br>
+                            E |--3--| (Root)<br>
+                            <span class="fret-number">فرت 3</span>
+                        </div>
+                        <div class="note-info">
+                            <strong>نکته:</strong> معمولاً به آکورد 7 عادی حل می‌شود.
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- maj7#5 Chord -->
+            <div id="maj7#5" class="chord-info">
+                <div class="chord-name">Major 7 Sharp 5 (maj7♯5)</div>
+                <div class="chord-details">
+                    <div class="tensions-section">
+                        <div class="section-title">تنش‌های مجاز</div>
+                        <div class="tension-tags">
+                            <span class="tension-tag">9</span>
+                            <span class="tension-tag">#11</span>
+                        </div>
+                        <div class="note-info">
+                            <strong>ساختار پایه:</strong> ۱ - ۳ - #۵ - ۷<br>
+                            <strong>صدای مدرن:</strong> کاربرد در موسیقی معاصر و جاز پیشرفته
+                        </div>
+                    </div>
+                    <div class="fingering-section">
+                        <div class="section-title">نحوه اجرا</div>
+                        <div class="fingering-diagram">
+                            مثال Cmaj7#5:<br>
+                            E |--0--| (7th)<br>
+                            B |--1--| (3rd)<br>
+                            G |--1--| (#5)<br>
+                            D |--2--| (Root)<br>
+                            A |--x--|<br>
+                            E |--x--|<br>
+                            <span class="fret-number">فرت 1</span>
+                        </div>
+                        <div class="note-info">
+                            <strong>نکته:</strong> آکورد پیچیده با صدای عمیق و مرموز.
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="tips">
+                <h3>راهنمای جامع استفاده از برنامه:</h3>
+                
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin-top: 20px;">
+                    <div>
+                        <h4 style="color: #e74c3c; margin-bottom: 15px;">🎸 کار با دیاگرام‌ها</h4>
+                        <ul style="line-height: 1.6;">
+                            <li><strong>انتخاب آکورد:</strong> از ۱۰ آکورد مختلف انتخاب کنید</li>
+                            <li><strong>نام سیم‌ها:</strong> E-A-D-G-B-E از چپ به راست</li>
+                            <li><strong>شماره فرت‌ها:</strong> موقعیت دقیق در کنار دیاگرام</li>
+                            <li><strong>شماره انگشت‌ها:</strong> ۱-۴ روی هر نقطه</li>
+                            <li><strong>دیاگرام حرفه‌ای:</strong> VexChords + SVG سفارشی</li>
+                        </ul>
+                    </div>
+                    
+                    <div>
+                        <h4 style="color: #f39c12; margin-bottom: 15px;">🎯 کار با تنش‌ها</h4>
+                        <ul style="line-height: 1.6;">
+                            <li><strong>کلیک روی تنش‌ها:</strong> نام آکورد خودکار بروزرسانی</li>
+                            <li><strong>تنش‌های ترکیبی:</strong> چندین تنش همزمان</li>
+                            <li><strong>آموزش فاصله‌ها:</strong> بخش تعاملی فاصله‌ها</li>
+                            <li><strong>موقعیت فرت‌بورد:</strong> کاربرد عملی هر تنش</li>
+                            <li><strong>نام آکورد پویا:</strong> تغییر خودکار با تنش‌ها</li>
+                        </ul>
+                    </div>
+                    
+                    <div>
+                        <h4 style="color: #27ae60; margin-bottom: 15px;">⚖️ انتخاب بهترین Voicing</h4>
+                        <ul style="line-height: 1.6;">
+                            <li><strong>مقایسه انواع:</strong> Close, Open, Rootless</li>
+                            <li><strong>سطح سختی:</strong> آسان - متوسط - سخت</li>
+                            <li><strong>راهنمای ارگونومی:</strong> بهترین موقعیت انگشت‌ها</li>
+                            <li><strong>چندین موقعیت:</strong> راه‌حل‌های متنوع اجرا</li>
+                            <li><strong>توصیه‌های کاربردی:</strong> مناسب هر سبک موسیقی</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div style="background: #ecf0f1; padding: 20px; border-radius: 10px; margin-top: 25px;">
+                    <h4 style="color: #2c3e50; margin-top: 0;">🔥 ویژگی‌های منحصر به فرد این برنامه:</h4>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px;">
+                        <div>✅ آموزش علمی تئوری موسیقی</div>
+                        <div>✅ تصویرسازی دقیق فرت‌بورد</div>
+                        <div>✅ راهنمای ارگونومی انگشت‌ها</div>
+                        <div>✅ مقایسه انواع Voicing ها</div>
+                        <div>✅ آموزش تعاملی فاصله‌ها</div>
+                        <div>✅ دیاگرام‌های استاندارد VexChords</div>
+                        <div>✅ رنگ‌بندی هوشمند نت‌ها</div>
+                        <div>✅ محتوای فارسی کامل</div>
+                    </div>
+                </div>
+                
+                <div style="background: linear-gradient(45deg, #667eea, #764ba2); color: white; padding: 20px; border-radius: 10px; margin-top: 20px; text-align: center;">
+                    <h4 style="margin-top: 0;">🎓 این برنامه کاملترین منبع فارسی برای یادگیری تنش‌های آکورد گیتار است!</h4>
+                    <p style="margin-bottom: 0; opacity: 0.9;">ترکیب تئوری موسیقی + تصویرسازی فرت‌بورد + ارگونومی + کاربرد عملی</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+                // VexChords data format
+        const chordVoicings = {
+            'm7': {
+                'basic': {
+                    name: 'Am7 پایه',
+                    difficulty: 'easy',
+                    description: 'ساده‌ترین شکل برای شروع',
+                    chord: [[0, 0], [1, 1], [2, 2], [3, 0], [4, 0], [5, 0]], // [string, fret]
+                    position: 1,
+                    fingers: [0, 1, 2, 0, 0, 0],
+                    noteTypes: ['root', 'seventh', 'third', 'fifth', 'root', 'root']
+                },
+                'with9': {
+                    name: 'Am7 با تنش ۹',
+                    difficulty: 'medium',
+                    description: 'افزودن تنش ۹ برای صدای غنی‌تر',
+                    chord: [[0, 3], [1, 0], [2, 2], [3, 2], [4, 1], [5, 3]],
+                    position: 1,
+                    fingers: [3, 0, 2, 4, 1, 3],
+                    noteTypes: ['tension', 'root', 'third', 'tension', 'seventh', 'tension']
+                },
+                'with11': {
+                    name: 'Am7 با تنش ۱۱',
+                    difficulty: 'medium',
+                    description: 'تنش ۱۱ برای صدای جازی',
+                    chord: [[0, 3], [1, 0], [2, 2], [3, 0], [4, 1], [5, 3]],
+                    position: 1,
+                    fingers: [3, 0, 2, 0, 1, 3],
+                    noteTypes: ['tension', 'root', 'third', 'fifth', 'seventh', 'tension']
+                },
+                'full': {
+                    name: 'Am7 کامل',
+                    difficulty: 'hard',
+                    description: 'همه تنش‌ها در یک آکورد',
+                    chord: [[1, 5], [2, 5], [3, 5], [4, 5], [5, -1]],
+                    position: 5,
+                    fingers: [1, 1, 1, 1, 0],
+                    noteTypes: ['tension', 'seventh', 'third', 'root', 'muted']
+                }
+            },
+            'maj7': {
+                'basic': {
+                    name: 'Cmaj7 پایه',
+                    difficulty: 'easy',
+                    description: 'شکل کلاسیک و پرکاربرد',
+                    chord: [[0, 0], [1, 3], [2, 2], [3, 0], [4, 1], [5, 0]],
+                    position: 1,
+                    fingers: [0, 3, 2, 0, 1, 0],
+                    noteTypes: ['seventh', 'fifth', 'root', 'fifth', 'third', 'root']
+                },
+                'with9': {
+                    name: 'Cmaj7 با تنش ۹',
+                    difficulty: 'medium',
+                    description: 'افزودن تنش ۹ برای حالت دریمی',
+                    chord: [[0, 0], [1, 3], [2, 2], [3, 0], [4, 3], [5, 0]],
+                    position: 1,
+                    fingers: [0, 2, 1, 0, 3, 0],
+                    noteTypes: ['seventh', 'fifth', 'root', 'fifth', 'tension', 'root']
+                },
+                'with#11': {
+                    name: 'Cmaj7 با #۱۱',
+                    difficulty: 'hard',
+                    description: 'تنش #۱۱ برای صدای لیدین',
+                    chord: [[0, 0], [1, 3], [2, 2], [3, 2], [4, 1], [5, 0]],
+                    position: 1,
+                    fingers: [0, 4, 2, 3, 1, 0],
+                    noteTypes: ['seventh', 'fifth', 'root', 'tension', 'third', 'root']
+                },
+                'full': {
+                    name: 'Cmaj7 کامل',
+                    difficulty: 'hard',
+                    description: 'آکورد کامل با چندین تنش',
+                    chord: [[0, 7], [1, 8], [2, 9], [3, 9], [4, 8]],
+                    position: 7,
+                    fingers: [1, 2, 4, 3, 2],
+                    noteTypes: ['seventh', 'tension', 'tension', 'root', 'third']
+                }
+            },
+            '7': {
+                'basic': {
+                    name: 'G7 پایه',
+                    difficulty: 'easy',
+                    description: 'کلاسیک‌ترین شکل آکورد ۷',
+                    chord: [[0, 3], [1, 2], [2, 0], [3, 0], [4, 0], [5, 3]],
+                    position: 1,
+                    fingers: [3, 2, 0, 0, 0, 4],
+                    noteTypes: ['root', 'root', 'fifth', 'third', 'seventh', 'root']
+                },
+                'with9': {
+                    name: 'G7 با تنش ۹',
+                    difficulty: 'medium',
+                    description: 'افزودن تنش ۹ برای صدای سوئینگ',
+                    chord: [[0, 3], [1, 2], [2, 0], [3, 2], [4, 0], [5, 3]],
+                    position: 1,
+                    fingers: [3, 1, 0, 2, 0, 4],
+                    noteTypes: ['root', 'root', 'fifth', 'tension', 'seventh', 'root']
+                },
+                'alt': {
+                    name: 'G7 آلترد',
+                    difficulty: 'hard',
+                    description: 'آکورد آلترد با b9 و #11',
+                    chord: [[0, 3], [1, 2], [2, 0], [3, 3], [4, 1]],
+                    position: 1,
+                    fingers: [3, 2, 0, 4, 1],
+                    noteTypes: ['root', 'root', 'fifth', 'tension', 'tension']
+                },
+                'full': {
+                    name: 'G7 کامل',
+                    difficulty: 'hard',
+                    description: 'همه تنش‌های ممکن',
+                    chord: [[0, 3], [1, 5], [2, 4], [3, 5], [4, 5]],
+                    position: 3,
+                    fingers: [1, 4, 2, 3, 4],
+                    noteTypes: ['root', 'tension', 'tension', 'tension', 'seventh']
+                                 }
+             },
+             'mMaj7': {
+                 'basic': {
+                     name: 'AmMaj7 پایه',
+                     difficulty: 'medium',
+                     description: 'ترکیب منحصر مینور با سپتم ماژور',
+                     chord: [[0, 0], [1, 1], [2, 1], [3, 0], [4, 0], [5, 0]],
+                     position: 1,
+                     fingers: [0, 1, 2, 0, 0, 0],
+                     noteTypes: ['root', 'seventh', 'third', 'fifth', 'root', 'root']
+                 },
+                 'with9': {
+                     name: 'AmMaj7(add9)',
+                     difficulty: 'hard',
+                     description: 'افزودن تنش ۹ برای پیچیدگی بیشتر',
+                     chord: [[0, 2], [1, 1], [2, 1], [3, 2], [4, 0], [5, 2]],
+                     position: 1,
+                     fingers: [2, 1, 1, 3, 0, 4],
+                     noteTypes: ['tension', 'seventh', 'third', 'tension', 'root', 'tension']
+                 },
+                 'with11': {
+                     name: 'AmMaj7(add11)',
+                     difficulty: 'hard',
+                     description: 'تنش ۱۱ برای رنگ خاص',
+                     chord: [[1, 5], [2, 5], [3, 5], [4, 4], [5, 0]],
+                     position: 4,
+                     fingers: [2, 2, 2, 1, 0],
+                     noteTypes: ['seventh', 'third', 'tension', 'root', 'root']
+                 }
+             },
+             'm6': {
+                 'basic': {
+                     name: 'Am6 پایه',
+                     difficulty: 'easy',
+                     description: 'جایگزین دلنشین برای m7',
+                     chord: [[0, 0], [1, 2], [2, 2], [3, 2], [4, 0], [5, 0]],
+                     position: 1,
+                     fingers: [0, 1, 2, 3, 0, 0],
+                     noteTypes: ['sixth', 'root', 'third', 'sixth', 'root', 'root']
+                 },
+                 'with9': {
+                     name: 'Am6(add9)',
+                     difficulty: 'medium',
+                     description: 'افزودن تنش ۹ برای حالت جازی',
+                     chord: [[0, 2], [1, 2], [2, 2], [3, 2], [4, 0], [5, 2]],
+                     position: 1,
+                     fingers: [2, 1, 1, 3, 0, 4],
+                     noteTypes: ['tension', 'root', 'third', 'sixth', 'root', 'tension']
+                 },
+                 'withMaj7': {
+                     name: 'Am6/Maj7',
+                     difficulty: 'hard',
+                     description: 'ترکیب ششم و سپتم ماژور',
+                     chord: [[1, 5], [2, 4], [3, 5], [4, 4], [5, 0]],
+                     position: 4,
+                     fingers: [3, 1, 4, 2, 0],
+                     noteTypes: ['seventh', 'sixth', 'third', 'root', 'root']
+                 }
+             },
+             '6': {
+                 'basic': {
+                     name: 'C6 پایه',
+                     difficulty: 'easy',
+                     description: 'آکورد شاد و پایانی عالی',
+                     chord: [[0, 0], [1, 3], [2, 2], [3, 2], [4, 1], [5, 0]],
+                     position: 1,
+                     fingers: [0, 4, 2, 3, 1, 0],
+                     noteTypes: ['sixth', 'fifth', 'root', 'sixth', 'third', 'root']
+                 },
+                 'with9': {
+                     name: 'C6(add9)',
+                     difficulty: 'medium',
+                     description: 'افزودن تنش ۹ برای صدای کامل',
+                     chord: [[0, 0], [1, 3], [2, 2], [3, 0], [4, 3], [5, 0]],
+                     position: 1,
+                     fingers: [0, 2, 1, 0, 3, 0],
+                     noteTypes: ['sixth', 'fifth', 'root', 'fifth', 'tension', 'root']
+                 },
+                 'withMaj7': {
+                     name: 'C6/Maj7',
+                     difficulty: 'hard',
+                     description: 'ترکیب ششم و سپتم ماژور',
+                     chord: [[0, 0], [1, 3], [2, 4], [3, 4], [4, 5], [5, 0]],
+                     position: 3,
+                     fingers: [0, 1, 2, 2, 4, 0],
+                     noteTypes: ['sixth', 'fifth', 'seventh', 'root', 'tension', 'root']
+                 }
+             },
+             'dim7': {
+                 'basic': {
+                     name: 'Adim7 پایه',
+                     difficulty: 'medium',
+                     description: 'آکورد عبوری کلاسیک',
+                     chord: [[1, 2], [2, 1], [3, 2], [4, 0]],
+                     position: 1,
+                     fingers: [2, 1, 3, 0],
+                     noteTypes: ['root', 'third', 'seventh', 'fifth']
+                 },
+                 'with9': {
+                     name: 'Adim7(add9)',
+                     difficulty: 'hard',
+                     description: 'افزودن تنش ۹ برای پیچیدگی',
+                     chord: [[0, 3], [1, 2], [2, 1], [3, 2], [4, 0]],
+                     position: 1,
+                     fingers: [4, 2, 1, 3, 0],
+                     noteTypes: ['tension', 'root', 'third', 'seventh', 'fifth']
+                 },
+                 'alt': {
+                     name: 'Adim7 جایگزین',
+                     difficulty: 'medium',
+                     description: 'شکل دیگر در موقعیت بالاتر',
+                     chord: [[1, 8], [2, 7], [3, 8], [4, 6]],
+                     position: 6,
+                     fingers: [3, 1, 4, 2],
+                     noteTypes: ['root', 'third', 'seventh', 'fifth']
+                 }
+             },
+             'm7b5': {
+                 'basic': {
+                     name: 'Bm7♭5 پایه',
+                     difficulty: 'medium',
+                     description: 'نیمه‌کاهش - مهم در ii-V-i',
+                     chord: [[1, 2], [2, 2], [3, 2], [4, 3]],
+                     position: 2,
+                     fingers: [1, 1, 2, 4],
+                     noteTypes: ['fifth', 'root', 'third', 'seventh']
+                 },
+                 'with9': {
+                     name: 'Bm7♭5(add9)',
+                     difficulty: 'hard',
+                     description: 'افزودن تنش ۹ برای غنای بیشتر',
+                     chord: [[0, 2], [1, 2], [2, 2], [3, 2], [4, 3]],
+                     position: 2,
+                     fingers: [1, 1, 1, 2, 4],
+                     noteTypes: ['tension', 'fifth', 'root', 'third', 'seventh']
+                 },
+                 'with11': {
+                     name: 'Bm7♭5(add11)',
+                     difficulty: 'hard',
+                     description: 'تنش ۱۱ برای حالت مدرن',
+                     chord: [[1, 7], [2, 7], [3, 7], [4, 8]],
+                     position: 7,
+                     fingers: [1, 1, 2, 4],
+                     noteTypes: ['fifth', 'root', 'tension', 'seventh']
+                 }
+             },
+             '7sus4': {
+                 'basic': {
+                     name: 'G7sus4 پایه',
+                     difficulty: 'easy',
+                     description: 'تعلیق که به 7 حل می‌شود',
+                     chord: [[0, 3], [1, 3], [2, 0], [3, 0], [4, 1], [5, 3]],
+                     position: 1,
+                     fingers: [3, 4, 0, 0, 1, 3],
+                     noteTypes: ['root', 'root', 'fifth', 'fourth', 'seventh', 'root']
+                 },
+                 'with9': {
+                     name: 'G7sus4(add9)',
+                     difficulty: 'medium',
+                     description: 'افزودن تنش ۹ برای رنگ بیشتر',
+                     chord: [[0, 3], [1, 3], [2, 0], [3, 2], [4, 1], [5, 3]],
+                     position: 1,
+                     fingers: [3, 4, 0, 2, 1, 3],
+                     noteTypes: ['root', 'root', 'fifth', 'tension', 'seventh', 'root']
+                 },
+                 'resolve': {
+                     name: 'G7sus4→G7',
+                     difficulty: 'medium',
+                     description: 'حل تعلیق به آکورد معمولی',
+                     chord: [[0, 3], [1, 2], [2, 0], [3, 0], [4, 0], [5, 3]],
+                     position: 1,
+                     fingers: [3, 2, 0, 0, 0, 4],
+                     noteTypes: ['root', 'root', 'fifth', 'third', 'seventh', 'root']
+                 }
+             },
+             'maj7#5': {
+                 'basic': {
+                     name: 'Cmaj7♯5 پایه',
+                     difficulty: 'hard',
+                     description: 'آکورد مدرن با #5',
+                     chord: [[0, 0], [1, 3], [2, 2], [3, 1], [4, 1], [5, 0]],
+                     position: 1,
+                     fingers: [0, 4, 3, 1, 2, 0],
+                     noteTypes: ['seventh', 'fifth', 'root', 'sharp_fifth', 'third', 'root']
+                 },
+                 'with9': {
+                     name: 'Cmaj7♯5(add9)',
+                     difficulty: 'hard',
+                     description: 'افزودن تنش ۹ برای پیچیدگی',
+                     chord: [[0, 0], [1, 3], [2, 4], [3, 1], [4, 3], [5, 0]],
+                     position: 1,
+                     fingers: [0, 2, 4, 1, 3, 0],
+                     noteTypes: ['seventh', 'fifth', 'tension', 'sharp_fifth', 'tension', 'root']
+                 },
+                 'alt': {
+                     name: 'Cmaj7♯5 جایگزین',
+                     difficulty: 'hard',
+                     description: 'شکل دیگر در موقعیت بالاتر',
+                     chord: [[1, 8], [2, 9], [3, 9], [4, 8]],
+                     position: 8,
+                     fingers: [1, 3, 4, 2],
+                     noteTypes: ['sharp_fifth', 'root', 'seventh', 'third']
+                 }
+             }
+         };
+
+        function showChord(chordType) {
+            // Hide all chord info divs
+            const chordInfos = document.querySelectorAll('.chord-info');
+            chordInfos.forEach(info => {
+                info.classList.remove('active');
+            });
+            
+            // Remove active class from all buttons
+            const buttons = document.querySelectorAll('.chord-button');
+            buttons.forEach(button => {
+                button.classList.remove('active');
+            });
+            
+            // Show selected chord info
+            const selectedChord = document.getElementById(chordType);
+            if (selectedChord) {
+                selectedChord.classList.add('active');
+                // Initialize guitar neck for this chord
+                if (chordVoicings[chordType]) {
+                    showVoicing(chordType, 'basic');
+                }
+            }
+            
+            // Add active class to clicked button
+            event.target.classList.add('active');
+            
+            // Smooth scroll to chord info
+            selectedChord.scrollIntoView({ 
+                behavior: 'smooth', 
+                block: 'start' 
+            });
+        }
+
+        function showVoicing(chordType, voicingType) {
+            const voicing = chordVoicings[chordType]?.[voicingType];
+            if (!voicing) return;
+
+            // Update voicing tabs
+            const tabs = document.querySelectorAll(`#${chordType} .voicing-tab`);
+            tabs.forEach(tab => tab.classList.remove('active'));
+            event?.target?.classList.add('active') || 
+            document.querySelector(`#${chordType} .voicing-tab`).classList.add('active');
+
+            // Update chord title
+            document.getElementById(`${chordType}-chord-title`).textContent = voicing.name;
+
+            // Update details
+            const details = document.getElementById(`${chordType}-details`);
+            if (details) {
+                details.innerHTML = `
+                    <span class="difficulty-indicator difficulty-${voicing.difficulty}">${getDifficultyText(voicing.difficulty)}</span><br>
+                    ${voicing.description}
+                `;
+            }
+
+            // Draw VexChords diagram
+            drawVexChord(chordType, voicing);
+        }
+
+        function drawVexChord(chordType, voicing) {
+            const diagramContainer = document.getElementById(`${chordType}-diagram`);
+            diagramContainer.innerHTML = '';
+
+            try {
+                // Check if VexChords is available
+                if (typeof VexChords !== 'undefined') {
+                    // Convert our format to VexChords format
+                    const chordDefinition = {
+                        chord: voicing.chord,
+                        position: voicing.position
+                    };
+
+                    // Create and render VexChords
+                    const chord = new VexChords.Chord(chordDefinition);
+                    const renderer = new VexChords.SVGRenderer({
+                        width: 200,
+                        height: 240,
+                        color: '#333333',
+                        backgroundColor: '#ffffff'
+                    });
+
+                    const svg = renderer.draw(chord);
+                    diagramContainer.appendChild(svg);
+
+                    // Add custom styling to SVG elements based on note types
+                    setTimeout(() => {
+                        const circles = svg.querySelectorAll('circle');
+                        voicing.chord.forEach((note, index) => {
+                            if (note[1] > 0 && circles[index]) {
+                                const noteType = voicing.noteTypes[index];
+                                let color = '#95a5a6';
+                                
+                                switch(noteType) {
+                                    case 'root': color = '#e74c3c'; break;
+                                    case 'third': color = '#3498db'; break;
+                                    case 'fifth': color = '#27ae60'; break;
+                                    case 'seventh': color = '#9b59b6'; break;
+                                    case 'tension': color = '#f39c12'; break;
+                                }
+                                
+                                circles[index].setAttribute('fill', color);
+                            }
+                        });
+                    }, 100);
+
+                } else {
+                    throw new Error('VexChords not loaded');
+                }
+
+            } catch (error) {
+                console.warn('VexChords error, using fallback:', error);
+                // Enhanced fallback diagram
+                drawFallbackDiagram(diagramContainer, voicing);
+            }
+        }
+
+        function drawFallbackDiagram(container, voicing) {
+            // Create a simple SVG chord diagram
+            const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+            svg.setAttribute('width', '200');
+            svg.setAttribute('height', '250');
+            svg.setAttribute('viewBox', '0 0 200 250');
+            svg.style.border = '1px solid #ddd';
+            svg.style.borderRadius = '8px';
+            svg.style.backgroundColor = '#ffffff';
+
+            // Draw fretboard background
+            const bg = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+            bg.setAttribute('x', '30');
+            bg.setAttribute('y', '40');
+            bg.setAttribute('width', '140');
+            bg.setAttribute('height', '160');
+            bg.setAttribute('fill', '#f8f9fa');
+            bg.setAttribute('stroke', '#2c3e50');
+            bg.setAttribute('stroke-width', '2');
+            svg.appendChild(bg);
+
+            // Draw strings (vertical lines) - نام سیم‌ها
+            const stringNames = ['E', 'A', 'D', 'G', 'B', 'E'];
+            for (let i = 0; i < 6; i++) {
+                const x = 40 + (i * 22);
+                
+                // Draw string line
+                const string = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+                string.setAttribute('x1', x);
+                string.setAttribute('y1', '40');
+                string.setAttribute('x2', x);
+                string.setAttribute('y2', '200');
+                string.setAttribute('stroke', '#7f8c8d');
+                string.setAttribute('stroke-width', '1.5');
+                svg.appendChild(string);
+                
+                // Add string name above
+                const stringLabel = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+                stringLabel.setAttribute('x', x);
+                stringLabel.setAttribute('y', '25');
+                stringLabel.setAttribute('text-anchor', 'middle');
+                stringLabel.setAttribute('font-family', 'Arial, sans-serif');
+                stringLabel.setAttribute('font-size', '12');
+                stringLabel.setAttribute('font-weight', 'bold');
+                stringLabel.setAttribute('fill', '#2c3e50');
+                stringLabel.textContent = stringNames[i];
+                svg.appendChild(stringLabel);
+            }
+
+            // Draw frets (horizontal lines) با شماره فرت
+            for (let i = 0; i <= 4; i++) {
+                const y = 40 + (i * 32);
+                const fret = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+                fret.setAttribute('x1', '30');
+                fret.setAttribute('y1', y);
+                fret.setAttribute('x2', '170');
+                fret.setAttribute('y2', y);
+                fret.setAttribute('stroke', '#bdc3c7');
+                fret.setAttribute('stroke-width', i === 0 ? '3' : '1');
+                svg.appendChild(fret);
+                
+                // Add fret numbers on the left
+                if (i > 0) {
+                    const fretNumber = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+                    fretNumber.setAttribute('x', '18');
+                    fretNumber.setAttribute('y', y - 12);
+                    fretNumber.setAttribute('text-anchor', 'middle');
+                    fretNumber.setAttribute('font-family', 'Arial, sans-serif');
+                    fretNumber.setAttribute('font-size', '10');
+                    fretNumber.setAttribute('font-weight', 'bold');
+                    fretNumber.setAttribute('fill', '#7f8c8d');
+                    fretNumber.textContent = (voicing.position + i - 1);
+                    svg.appendChild(fretNumber);
+                }
+            }
+
+            // Draw finger positions
+            voicing.chord.forEach((note, stringIndex) => {
+                const stringX = 40 + (stringIndex * 22);
+                
+                if (note[1] === 0) {
+                    // Open string - draw circle above nut
+                    const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+                    circle.setAttribute('cx', stringX);
+                    circle.setAttribute('cy', '30');
+                    circle.setAttribute('r', '5');
+                    circle.setAttribute('fill', 'none');
+                    circle.setAttribute('stroke', '#27ae60');
+                    circle.setAttribute('stroke-width', '2');
+                    svg.appendChild(circle);
+                } else if (note[1] > 0) {
+                    // Finger position
+                    const noteType = voicing.noteTypes[stringIndex];
+                    let color = '#95a5a6';
+                    
+                    switch(noteType) {
+                        case 'root': color = '#e74c3c'; break;
+                        case 'third': color = '#3498db'; break;
+                        case 'fifth': color = '#27ae60'; break;
+                        case 'seventh': color = '#9b59b6'; break;
+                        case 'tension': color = '#f39c12'; break;
+                        case 'sixth': color = '#e67e22'; break;
+                        case 'fourth': color = '#95a5a6'; break;
+                        case 'sharp_fifth': color = '#8e44ad'; break;
+                    }
+
+                    const fretY = 40 + ((note[1] - voicing.position + 1) * 32) - 16;
+                    
+                    const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+                    circle.setAttribute('cx', stringX);
+                    circle.setAttribute('cy', fretY);
+                    circle.setAttribute('r', '8');
+                    circle.setAttribute('fill', color);
+                    circle.setAttribute('stroke', '#ffffff');
+                    circle.setAttribute('stroke-width', '2');
+                    svg.appendChild(circle);
+
+                    // Add finger number
+                    if (voicing.fingers[stringIndex] > 0) {
+                        const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+                        text.setAttribute('x', stringX);
+                        text.setAttribute('y', fretY + 3);
+                        text.setAttribute('text-anchor', 'middle');
+                        text.setAttribute('font-family', 'Arial, sans-serif');
+                        text.setAttribute('font-size', '10');
+                        text.setAttribute('font-weight', 'bold');
+                        text.setAttribute('fill', '#ffffff');
+                        text.textContent = voicing.fingers[stringIndex];
+                        svg.appendChild(text);
+                    }
+                } else if (note[1] === -1) {
+                    // Muted string - draw X above nut
+                    const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+                    text.setAttribute('x', stringX);
+                    text.setAttribute('y', '32');
+                    text.setAttribute('text-anchor', 'middle');
+                    text.setAttribute('font-family', 'Arial, sans-serif');
+                    text.setAttribute('font-size', '12');
+                    text.setAttribute('font-weight', 'bold');
+                    text.setAttribute('fill', '#e74c3c');
+                    text.textContent = '×';
+                    svg.appendChild(text);
+                }
+            });
+
+            // Add chord name at bottom
+            const chordName = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+            chordName.setAttribute('x', '100');
+            chordName.setAttribute('y', '230');
+            chordName.setAttribute('text-anchor', 'middle');
+            chordName.setAttribute('font-family', 'Arial, sans-serif');
+            chordName.setAttribute('font-size', '14');
+            chordName.setAttribute('font-weight', 'bold');
+            chordName.setAttribute('fill', '#2c3e50');
+            chordName.textContent = voicing.name;
+            svg.appendChild(chordName);
+
+            container.appendChild(svg);
+        }
+
+                                   function addTension(chordType, tension) {
+              // Toggle tension tag active state
+              event.target.classList.toggle('active');
+              
+              // Find appropriate voicing based on selected tensions
+              const activeTensions = document.querySelectorAll(`#${chordType} .tension-tag.active`);
+              let voicingType = 'basic';
+              let chordName = getBaseChordName(chordType);
+              
+              if (activeTensions.length > 0) {
+                  const tensionTypes = Array.from(activeTensions).map(t => t.textContent);
+                  
+                  // Determine voicing type and update chord name
+                  if (chordType === '7') {
+                      if (tensionTypes.includes('9') && tensionTypes.length === 1) {
+                          voicingType = 'with9';
+                          chordName += '(add9)';
+                      } else if (tensionTypes.includes('b9') || tensionTypes.includes('#11')) {
+                          voicingType = 'alt';
+                          chordName += 'alt';
+                      } else if (tensionTypes.length > 1) {
+                          voicingType = 'full';
+                          chordName += '(' + tensionTypes.join(',') + ')';
+                      }
+                  } else if (chordType === 'maj7') {
+                      if (tensionTypes.includes('9') && tensionTypes.length === 1) {
+                          voicingType = 'with9';
+                          chordName += '(add9)';
+                      } else if (tensionTypes.includes('#11')) {
+                          voicingType = 'with#11';
+                          chordName += '(#11)';
+                      } else if (tensionTypes.length > 1) {
+                          voicingType = 'full';
+                          chordName += '(' + tensionTypes.join(',') + ')';
+                      }
+                  } else if (chordType === 'm7') {
+                      if (tensionTypes.includes('9') && tensionTypes.length === 1) {
+                          voicingType = 'with9';
+                          chordName += '(add9)';
+                      } else if (tensionTypes.includes('11')) {
+                          voicingType = 'with11';
+                          chordName += '(add11)';
+                      } else if (tensionTypes.length > 1) {
+                          voicingType = 'full';
+                          chordName += '(' + tensionTypes.join(',') + ')';
+                      }
+                  } else if (chordType === 'mMaj7') {
+                      if (tensionTypes.includes('9')) {
+                          voicingType = 'with9';
+                          chordName += '(add9)';
+                      } else if (tensionTypes.includes('11')) {
+                          voicingType = 'with11';
+                          chordName += '(add11)';
+                      }
+                  } else if (chordType === 'm6') {
+                      if (tensionTypes.includes('9')) {
+                          voicingType = 'with9';
+                          chordName += '(add9)';
+                      } else if (tensionTypes.includes('maj7')) {
+                          voicingType = 'withMaj7';
+                          chordName += '/Maj7';
+                      }
+                  } else if (chordType === '6') {
+                      if (tensionTypes.includes('9')) {
+                          voicingType = 'with9';
+                          chordName += '(add9)';
+                      } else if (tensionTypes.includes('maj7')) {
+                          voicingType = 'withMaj7';
+                          chordName += '/Maj7';
+                      }
+                  } else if (chordType === 'dim7') {
+                      if (tensionTypes.includes('9')) {
+                          voicingType = 'with9';
+                          chordName += '(add9)';
+                      } else if (tensionTypes.includes('11')) {
+                          voicingType = 'alt';
+                          chordName += ' جایگزین';
+                      }
+                  } else if (chordType === 'm7b5') {
+                      if (tensionTypes.includes('9')) {
+                          voicingType = 'with9';
+                          chordName += '(add9)';
+                      } else if (tensionTypes.includes('11')) {
+                          voicingType = 'with11';
+                          chordName += '(add11)';
+                      }
+                  } else if (chordType === '7sus4') {
+                      if (tensionTypes.includes('9')) {
+                          voicingType = 'with9';
+                          chordName += '(add9)';
+                      } else if (tensionTypes.includes('3')) {
+                          voicingType = 'resolve';
+                          chordName = chordName.replace('7sus4', '7');
+                      }
+                  } else if (chordType === 'maj7#5') {
+                      if (tensionTypes.includes('9')) {
+                          voicingType = 'with9';
+                          chordName += '(add9)';
+                      } else if (tensionTypes.includes('#11')) {
+                          voicingType = 'alt';
+                          chordName += ' جایگزین';
+                      }
+                  }
+              }
+              
+              // Show corresponding voicing
+              showVoicing(chordType, voicingType);
+              
+              // Update voicing tabs
+              const tabs = document.querySelectorAll(`#${chordType} .voicing-tab`);
+              tabs.forEach(tab => tab.classList.remove('active'));
+              const targetTab = document.querySelector(`#${chordType} .voicing-tab[onclick*="${voicingType}"]`);
+              if (targetTab) targetTab.classList.add('active');
+              
+              // Update chord name in header
+              updateChordName(chordType, chordName);
+          }
+          
+          function getBaseChordName(chordType) {
+              const baseNames = {
+                  'm7': 'Am7',
+                  'maj7': 'Cmaj7',
+                  '7': 'G7',
+                  'mMaj7': 'AmMaj7',
+                  'm6': 'Am6',
+                  '6': 'C6',
+                  'dim7': 'Adim7',
+                  'm7b5': 'Bm7♭5',
+                  '7sus4': 'G7sus4',
+                  'maj7#5': 'Cmaj7♯5'
+              };
+              return baseNames[chordType] || chordType;
+          }
+          
+          function updateChordName(chordType, newName) {
+              const chordNameElement = document.querySelector(`#${chordType} .chord-name`);
+              if (chordNameElement) {
+                  // Extract English name and Persian description
+                  const parts = chordNameElement.textContent.split('(');
+                  const persianPart = parts.length > 1 ? ' (' + parts[1] : '';
+                  chordNameElement.textContent = newName + persianPart;
+              }
+          }
+
+        function getNoteName(noteType) {
+            const names = {
+                'root': 'ریشه',
+                'third': 'ترس',
+                'fifth': 'کوینت',
+                'seventh': 'سپتم',
+                'tension': 'تنش',
+                'sixth': 'ششم',
+                'fourth': 'کوارت',
+                'sharp_fifth': '#کوینت',
+                'open': 'باز',
+                'muted': 'خاموش'
+            };
+            return names[noteType] || noteType;
+        }
+
+        function getDifficultyText(difficulty) {
+            const texts = {
+                'easy': 'آسان',
+                'medium': 'متوسط',
+                'hard': 'سخت'
+            };
+            return texts[difficulty] || difficulty;
+        }
+        
+        // Interactive interval learning functions
+        function showInterval(intervalType) {
+            // Remove active class from all cards
+            document.querySelectorAll('.interval-card').forEach(card => {
+                card.classList.remove('active');
+            });
+            
+            // Add active class to clicked card
+            event.target.closest('.interval-card').classList.add('active');
+            
+            const intervalData = {
+                'root': {
+                    title: 'ریشه (Root) - پایه هر آکورد',
+                    positions: 'فرت ۵ سیم A = نت A | فرت ۳ سیم E = نت G | فرت ۰ سیم E = نت E',
+                    applications: 'ضروری در همه آکوردها - معمولاً در بیس قرار می‌گیرد - مرجع تمام فاصله‌ها'
+                },
+                'ninth': {
+                    title: 'نهم (9th) - رنگ شیرین و دریمی',
+                    positions: 'فرت ۷ سیم A = نت B (9th of A) | فرت ۵ سیم E = نت A (9th of G) | فرت ۲ سیم E = نت F# (9th of E)',
+                    applications: 'رایج در جاز و R&B - اضافه کردن بدون تغییر کارکرد هارمونیک - جایگزین 2nd در voicing های پیشرفته'
+                },
+                'eleventh': {
+                    title: 'یازدهم (11th) - حس تعلیق و انتظار',
+                    positions: 'فرت ۸ سیم A = نت D (11th of A) | فرت ۶ سیم E = نت Bb (11th of G) | فرت ۳ سیم E = نت G (11th of E)',
+                    applications: 'در maj7: معمولاً #11 - در m7: طبیعی مجاز - در 7: قابل استفاده با احتیاط - ایجاد suspension'
+                },
+                'thirteenth': {
+                    title: 'سیزدهم (13th) - تکمیل کننده آکورد',
+                    positions: 'فرت ۱۰ سیم A = نت F# (13th of A) | فرت ۸ سیم E = نت C (13th of G) | فرت ۵ سیم E = نت A (13th of E)',
+                    applications: 'نهایی‌ترین تنش طبیعی - صدای کامل و غنی - معمولاً در صدای بالا - جایگزین 6th در کاربردهای خاص'
+                }
+            };
+            
+            const data = intervalData[intervalType];
+            document.getElementById('interval-title').textContent = data.title;
+            document.getElementById('fretboard-positions').innerHTML = `<p style="line-height: 1.6; color: #2c3e50;">${data.positions}</p>`;
+            document.getElementById('chord-applications').innerHTML = `<p style="line-height: 1.6; color: #2c3e50;">${data.applications}</p>`;
+            document.getElementById('interval-display').style.display = 'block';
+        }
+        
+        function showVoicingTips(voicingType) {
+            const tips = {
+                'close': {
+                    title: 'Close Voicing - صدای متمرکز',
+                    content: `
+                        <h4 style="color: #27ae60;">✅ مزایا:</h4>
+                        <ul>
+                            <li>آسان‌ترین برای اجرا</li>
+                            <li>صدای واضح و متمرکز</li>
+                            <li>مناسب تنها‌نوازی</li>
+                            <li>انگشت‌گذاری ساده</li>
+                        </ul>
+                        <h4 style="color: #e74c3c;">⚠️ نکات:</h4>
+                        <ul>
+                            <li>ممکن است در میکس گم شود</li>
+                            <li>محدوده صدایی کم</li>
+                            <li>برای بیگ بند مناسب نیست</li>
+                        </ul>
+                        <h4 style="color: #3498db;">🎯 بهترین استفاده:</h4>
+                        <p>آکوردهای تنها‌نوازی، کمبوهای کوچک، تمرین ابتدایی</p>
+                    `
+                },
+                'open': {
+                    title: 'Open Voicing - صدای باز و پهن',
+                    content: `
+                        <h4 style="color: #27ae60;">✅ مزایا:</h4>
+                        <ul>
+                            <li>صدای بازتر و پهن‌تر</li>
+                            <li>جداسازی بهتر نت‌ها</li>
+                            <li>مناسب برای آرنجمان</li>
+                            <li>حضور قوی‌تر در میکس</li>
+                        </ul>
+                        <h4 style="color: #e74c3c;">⚠️ نکات:</h4>
+                        <ul>
+                            <li>سخت‌تر برای اجرا</li>
+                            <li>نیاز به تمرین بیشتر</li>
+                            <li>ممکن است کش‌دار باشد</li>
+                        </ul>
+                        <h4 style="color: #3498db;">🎯 بهترین استفاده:</h4>
+                        <p>بیگ بند، آرنجمان، ریتم سکشن</p>
+                    `
+                },
+                'rootless': {
+                    title: 'Rootless Voicing - بدون ریشه',
+                    content: `
+                        <h4 style="color: #27ae60;">✅ مزایا:</h4>
+                        <ul>
+                            <li>تمرکز روی رنگ‌ها</li>
+                            <li>صدای مدرن و پیشرفته</li>
+                            <li>جا برای بیس‌نواز</li>
+                            <li>حرکت صدایی بهتر</li>
+                        </ul>
+                        <h4 style="color: #e74c3c;">⚠️ نکات:</h4>
+                        <ul>
+                            <li>نیاز به بیس‌نواز</li>
+                            <li>پیچیده‌ترین نوع</li>
+                            <li>نیاز به دانش تئوری بالا</li>
+                        </ul>
+                        <h4 style="color: #3498db;">🎯 بهترین استفاده:</h4>
+                        <p>تریو جاز، کمبوهای پیشرفته، پیانو در کمبو</p>
+                    `
+                }
+            };
+            
+            const tip = tips[voicingType];
+            const tipsDiv = document.getElementById('voicing-tips');
+            tipsDiv.innerHTML = `
+                <h3 style="margin-top: 0; color: #2c3e50;">${tip.title}</h3>
+                ${tip.content}
+            `;
+            tipsDiv.style.display = 'block';
+        }
+
+        // Show first chord by default
+        document.addEventListener('DOMContentLoaded', function() {
+            showChord('m7');
+            document.querySelector('.chord-button').classList.add('active');
+        });
+    </script>
+</body>
+</html>
